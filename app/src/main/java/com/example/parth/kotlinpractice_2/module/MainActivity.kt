@@ -2,9 +2,7 @@ package com.example.parth.kotlinpractice_2.module
 
 import android.content.Context
 import android.content.Intent
-import android.databinding.DataBindingUtil.setContentView
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.example.parth.kotlinpractice_2.R
 import com.example.parth.kotlinpractice_2.databinding.ActivityMainBinding
 import com.example.parth.kotlinpractice_2.support.CoreActivity
@@ -21,6 +19,8 @@ class MainActivity : CoreActivity<MainActivity,ActivityMainBinding, MainViewMode
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setDefaults(this,R.layout.activity_main)
+
+//        startActivity(DrawerActivity.getIntent(this))
     }
 
     override fun setVM(binding: ActivityMainBinding) {
@@ -36,14 +36,18 @@ class MainActivity : CoreActivity<MainActivity,ActivityMainBinding, MainViewMode
     }
 
     override fun isCustomActionbar(): Boolean {
-        return true
+        return false
     }
 
     override fun isBackEnabled(): Boolean {
-        return true
+        return false
     }
 
     override fun getActionBarTitle(): String {
         return "Preyansh Activity Demo"
+    }
+
+    override fun hasNavigationDrawer(): Boolean {
+        return true
     }
 }

@@ -4,7 +4,8 @@
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="com.example.parth.kotlinpractice_2.support.CoreViewModel" />
@@ -19,15 +20,49 @@
         <include
             android:id="@+id/included_tool_bar"
             layout="@layout/tool_bar"
-            app:vm="@{vm}"
-            android:visibility="@{vm.isCustomActionbar() ? View.VISIBLE : View.GONE}"/>
+            android:visibility="@{vm.isCustomActionbar() ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:vm="@{vm}" />
 
         <!-- Add ContentView here -->
         <LinearLayout
             android:id="@+id/core_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/included_tool_bar">
+
+
+            <!-- Add Navigation drawer here -->
+            <include
+                android:id="@+id/included_navigation_drawer"
+                layout="@layout/activity_drawer"
+                android:visibility="@{vm.hasNavigationDrawer ? View.VISIBLE : View.GONE}"
+                app:vm="@{vm}" />
+
+        </LinearLayout>
+
+        <!-- Add Bottom Navigation view here -->
+        <!--<android.support.design.widget.BottomNavigationView-->
+        <!--android:id="@+id/bottom_navigation"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginBottom="0dp"-->
+        <!--android:layout_marginLeft="0dp"-->
+        <!--android:layout_marginRight="0dp"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:menu="@menu/bottom_navigation_menu"-->
+        <!--bind:bottomNavigationListener="@{vm}"-->
+        <!--bind:setShiftingMode="@{false}" />-->
+
 
     </LinearLayout>
 </layout>
