@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.example.parth.kotlinpractice_2.support.CoreViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Add ToolBar layout here -->
+        <include
+            android:id="@+id/included_tool_bar"
+            layout="@layout/tool_bar"
+            app:vm="@{vm}"
+            android:visibility="@{vm.isCustomActionbar() ? View.VISIBLE : View.GONE}"/>
+
+        <!-- Add ContentView here -->
+        <LinearLayout
+            android:id="@+id/core_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
+
+    </LinearLayout>
+</layout>
