@@ -6,7 +6,9 @@ import android.databinding.ObservableField
 
 open class CoreViewModel : BaseObservable() {
     var isCustomActionbar = ObservableBoolean(false)
-    var actionBarTitle = ObservableField<String>("")
+    var actionBarTitle = ObservableField<String>("zxcvb")
     var isBackEnabled = ObservableBoolean(false)
     var hasNavigationDrawer = ObservableBoolean(false)
+    var navigationDrawerMenu = ObservableField<Int>()
+
 }

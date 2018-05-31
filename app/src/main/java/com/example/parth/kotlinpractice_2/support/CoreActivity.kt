@@ -3,14 +3,17 @@ package com.example.parth.kotlinpractice_2.support
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.support.v4.view.GravityCompat
+import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.example.parth.kotlinpractice_2.R
 import com.example.parth.kotlinpractice_2.databinding.ActivityCoreBinding
+import com.example.parth.kotlinpractice_2.databinding.ActivityDrawerBinding
 import kotlinx.android.synthetic.main.activity_drawer.*
 import kotlinx.android.synthetic.main.app_bar_drawer.*
+import kotlinx.android.synthetic.main.content_drawer.view.*
 import kotlinx.android.synthetic.main.tool_bar.*
 
 
@@ -19,6 +22,7 @@ abstract class CoreActivity<T : CoreActivity<T, B, VM>, B : ViewDataBinding, VM 
     lateinit var activity: T
     var layoutRes: Int = 0
     lateinit var coreBinding: ActivityCoreBinding
+    lateinit var navigationDrawerBinding: ActivityDrawerBinding
     lateinit var binding: B
     var vm: VM? = null
     val viewModel: VM
@@ -49,18 +53,33 @@ abstract class CoreActivity<T : CoreActivity<T, B, VM>, B : ViewDataBinding, VM 
     fun setNavigationDrawerContentView(childLayoutRes: Int) {
         binding = DataBindingUtil.inflate(layoutInflater, childLayoutRes, null, false)
         val lp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        coreBinding.includedNavigationDrawer!!.includedAppBar!!.navigationDrawerContent.addView(binding.root, lp)
+        coreBinding.includedNavigationDrawer!!.includedAppBar!!.navigationDrawerContent!!.container.addView(binding.root, lp)
     }
 
     fun setDefaults(activity: T, layoutRes: Int) {
         this.activity = activity
         this.layoutRes = layoutRes
         if (hasNavigationDrawer()) {
-            removeActionBar(R.layout.activity_drawer)
-            activity.setSupportActionBar(toolbar_navigation_drawer)
-            setNavigationDrawerContentView(layoutRes)
+            setUpNavigationDrawer(activity, layoutRes)
+        } else {
+            setActionBar(layoutRes)
         }
-        setActionBar(layoutRes)
+    }
+
+    private fun setUpNavigationDrawer(activity: T, layoutRes: Int) {
+        removeActionBar()
+        coreBinding = DataBindingUtil.setContentView(this, R.layout.activity_core)
+        setCoreVM()
+        coreViewModel.hasNavigationDrawer.set(true)
+        activity.setSupportActionBar(toolbar_navigation_drawer)
+        activity.title = getActionBarTitle()
+        setNavigationDrawerContentView(layoutRes)
+        setVM(binding)
+        setNavigationDrawerMenu(coreViewModel)
+        val toggle = ActionBarDrawerToggle(
+                this, drawer_layout, toolbar_navigation_drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        drawer_layout.addDrawerListener(toggle)
+        toggle.syncState()
     }
 
     private fun setActionBar(childLayoutRes: Int) {
@@ -71,33 +90,42 @@ abstract class CoreActivity<T : CoreActivity<T, B, VM>, B : ViewDataBinding, VM 
 
         if (hasActionBar) {
             if (isCustomActionBar) {
-                removeActionBar(childLayoutRes)
-                coreViewModel.isCustomActionbar.set(isCustomActionBar)
-                coreViewModel.actionBarTitle.set(actionBarTitle)
-                coreViewModel.isBackEnabled.set(isBackEnabled)
+                removeActionBar()
+                setBindings(childLayoutRes)
+                setCustomActionBarProperties(isCustomActionBar, actionBarTitle, isBackEnabled)
                 activity.setSupportActionBar(tool_bar_box)
             } else {
                 setBindings(childLayoutRes)
-                activity.title = actionBarTitle
-                activity.supportActionBar?.setDisplayHomeAsUpEnabled(isBackEnabled)
-                activity.supportActionBar?.setDisplayShowHomeEnabled(isBackEnabled)
+                setDefaultActionBarProperties(actionBarTitle, isBackEnabled)
             }
         } else {
-            removeActionBar(childLayoutRes)
+            removeActionBar()
+            setBindings(childLayoutRes)
         }
     }
 
-    private fun removeActionBar(childLayoutRes: Int) {
+    private fun setDefaultActionBarProperties(actionBarTitle: String, isBackEnabled: Boolean) {
+        activity.title = actionBarTitle
+        activity.supportActionBar?.setDisplayHomeAsUpEnabled(isBackEnabled)
+        activity.supportActionBar?.setDisplayShowHomeEnabled(isBackEnabled)
+    }
+
+    private fun setCustomActionBarProperties(isCustomActionBar: Boolean, actionBarTitle: String, isBackEnabled: Boolean) {
+        coreViewModel.isCustomActionbar.set(isCustomActionBar)
+        coreViewModel.actionBarTitle.set(actionBarTitle)
+        coreViewModel.isBackEnabled.set(isBackEnabled)
+    }
+
+    private fun removeActionBar() {
         activity.setTheme(R.style.AppTheme_NoActionBar)
-        setBindings(childLayoutRes)
-        setVM(binding)
-        setCoreVM()
     }
 
     private fun setBindings(childLayoutRes: Int) {
         coreBinding = DataBindingUtil.setContentView(this, R.layout.activity_core)
         binding = DataBindingUtil.inflate(layoutInflater, childLayoutRes, null, false)
         setContentView(binding.root)
+        setVM(binding)
+        setCoreVM()
     }
 
     private fun setCoreVM() {
@@ -121,4 +149,6 @@ abstract class CoreActivity<T : CoreActivity<T, B, VM>, B : ViewDataBinding, VM 
     abstract fun getActionBarTitle(): String
 
     abstract fun hasNavigationDrawer(): Boolean
+
+    abstract fun setNavigationDrawerMenu(coreViewModel: CoreViewModel)
 }

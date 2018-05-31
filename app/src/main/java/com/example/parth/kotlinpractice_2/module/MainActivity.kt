@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.example.parth.kotlinpractice_2.R
 import com.example.parth.kotlinpractice_2.databinding.ActivityMainBinding
 import com.example.parth.kotlinpractice_2.support.CoreActivity
+import com.example.parth.kotlinpractice_2.support.CoreViewModel
 
 class MainActivity : CoreActivity<MainActivity,ActivityMainBinding, MainViewModel>() {
 
@@ -36,18 +37,22 @@ class MainActivity : CoreActivity<MainActivity,ActivityMainBinding, MainViewMode
     }
 
     override fun isCustomActionbar(): Boolean {
-        return false
+        return true
     }
 
     override fun isBackEnabled(): Boolean {
-        return false
+        return true
     }
 
     override fun getActionBarTitle(): String {
-        return "Preyansh Activity Demo"
+        return "Presh Activity"
     }
 
     override fun hasNavigationDrawer(): Boolean {
         return true
+    }
+
+    override fun setNavigationDrawerMenu(coreViewModel: CoreViewModel) {
+        coreViewModel.navigationDrawerMenu.set(R.menu.bottom_navigation_menu)
     }
 }

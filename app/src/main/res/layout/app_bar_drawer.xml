@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.example.parth.kotlinpractice_2.support.CoreViewModel" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -26,15 +29,17 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <LinearLayout
+        <!--<LinearLayout-->
+        <!--android:id="@+id/navigation_drawer_content"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="vertical">-->
+
+        <!--</LinearLayout>-->
+
+        <include
             android:id="@+id/navigation_drawer_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-        </LinearLayout>
-
-        <!--<include layout="@layout/content_drawer" />-->
+            layout="@layout/content_drawer" />
 
         <!--<android.support.design.widget.FloatingActionButton-->
         <!--android:id="@+id/fab"-->
