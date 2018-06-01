@@ -39,7 +39,8 @@
 
         <include
             android:id="@+id/navigation_drawer_content"
-            layout="@layout/content_drawer" />
+            layout="@layout/content_drawer"
+            app:vm="@{vm}"/>
 
         <!--<android.support.design.widget.FloatingActionButton-->
         <!--android:id="@+id/fab"-->

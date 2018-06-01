@@ -3,6 +3,7 @@ package com.example.parth.kotlinpractice_2.module
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.NavigationView
 import com.example.parth.kotlinpractice_2.R
 import com.example.parth.kotlinpractice_2.databinding.ActivityMainBinding
 import com.example.parth.kotlinpractice_2.support.CoreActivity
@@ -37,11 +38,11 @@ class MainActivity : CoreActivity<MainActivity,ActivityMainBinding, MainViewMode
     }
 
     override fun isCustomActionbar(): Boolean {
-        return true
+        return false
     }
 
     override fun isBackEnabled(): Boolean {
-        return true
+        return false
     }
 
     override fun getActionBarTitle(): String {
@@ -49,10 +50,18 @@ class MainActivity : CoreActivity<MainActivity,ActivityMainBinding, MainViewMode
     }
 
     override fun hasNavigationDrawer(): Boolean {
-        return true
+        return false
     }
 
-    override fun setNavigationDrawerMenu(coreViewModel: CoreViewModel) {
-        coreViewModel.navigationDrawerMenu.set(R.menu.bottom_navigation_menu)
+    override fun setNavigationDrawerMenu(navigationView: NavigationView, coreViewModel: CoreViewModel) {
+        coreViewModel.setNavigationDrawerMenu(navigationView, R.menu.bottom_navigation_menu)
+    }
+
+    override fun setNavigationDrawerHeader(navigationView: NavigationView, coreViewModel: CoreViewModel) {
+        coreViewModel.setNavigationDrawerHeader(navigationView, R.layout.nav_header_drawer)
+    }
+
+    override fun hasBottomNavigation(): Boolean {
+        return false
     }
 }

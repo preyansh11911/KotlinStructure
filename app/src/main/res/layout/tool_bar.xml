@@ -30,7 +30,8 @@
                 android:src="@drawable/ic_back"
                 android:visibility="@{vm.isBackEnabled() ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="@{vm::onBackPressed}"/>
 
             <TextView
                 android:id="@+id/tool_bar_title"

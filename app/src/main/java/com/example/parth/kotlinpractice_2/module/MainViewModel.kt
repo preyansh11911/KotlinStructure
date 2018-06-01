@@ -4,6 +4,6 @@ import android.app.Activity
 import android.databinding.ObservableField
 import com.example.parth.kotlinpractice_2.support.CoreViewModel
 
-class MainViewModel(activity: Activity) : CoreViewModel() {
+class MainViewModel(_activity: Activity) : CoreViewModel(_activity) {
     var text = ObservableField<String>("Preyansh from MainViewModel")
 }

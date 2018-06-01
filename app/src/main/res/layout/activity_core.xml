@@ -21,9 +21,6 @@
             android:id="@+id/included_tool_bar"
             layout="@layout/tool_bar"
             android:visibility="@{vm.isCustomActionbar() ? View.VISIBLE : View.GONE}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:vm="@{vm}" />
 
         <!-- Add ContentView here -->
@@ -48,21 +45,12 @@
 
         </LinearLayout>
 
-        <!-- Add Bottom Navigation view here -->
-        <!--<android.support.design.widget.BottomNavigationView-->
-        <!--android:id="@+id/bottom_navigation"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="0dp"-->
-        <!--android:layout_marginLeft="0dp"-->
-        <!--android:layout_marginRight="0dp"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintLeft_toLeftOf="parent"-->
-        <!--app:layout_constraintRight_toRightOf="parent"-->
-        <!--app:menu="@menu/bottom_navigation_menu"-->
-        <!--bind:bottomNavigationListener="@{vm}"-->
-        <!--bind:setShiftingMode="@{false}" />-->
-
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/bottom_navigation_menu"
+            android:visibility="@{vm.hasBottomNavigation ? View.VISIBLE : View.GONE}"/>
 
     </LinearLayout>
 </layout>
