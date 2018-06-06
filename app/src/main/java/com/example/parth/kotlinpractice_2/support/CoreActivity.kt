@@ -2,21 +2,24 @@ package com.example.parth.kotlinpractice_2.support
 
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
+import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.NavigationView
+import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.example.parth.kotlinpractice_2.R
+import com.example.parth.kotlinpractice_2.R.id.*
 import com.example.parth.kotlinpractice_2.databinding.ActivityCoreBinding
 import com.example.parth.kotlinpractice_2.databinding.ActivityDrawerBinding
-import kotlinx.android.synthetic.main.activity_drawer.*
-import kotlinx.android.synthetic.main.app_bar_drawer.*
-import kotlinx.android.synthetic.main.tool_bar.*
+import com.example.parth.kotlinpractice_2.module.MainActivity
 
 
-abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, VM : CoreViewModel> : AppCompatActivity() {
+abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, VM : ActivityViewModel> : AppCompatActivity() {
 
     lateinit var activity: T
     var layoutRes: Int = 0
@@ -25,16 +28,10 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
     lateinit var binding: DB
     var vm: VM? = null
     val viewModel: VM
-        get() {
-            if (vm == null) vm = createViewModel(activity)
-            return vm!!
-        }
-    var coreVM: CoreViewModel? = null
-    val coreViewModel: CoreViewModel
-        get() {
-            if (coreVM == null) coreVM = createCoreViewModel()
-            return coreVM!!
-        }
+        get() = createViewModel(activity)
+    var coreVM: ActivityViewModel? = null
+    val coreViewModel: ActivityViewModel
+        get() = createCoreViewModel()
 
     override fun setContentView(childView: View?) {
         val lp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
@@ -42,14 +39,27 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
     }
 
     override fun onBackPressed() {
-        coreViewModel.onBackPressed()
+        drawer_layout.let { if (it.isDrawerOpen(GravityCompat.START)) it.closeDrawer(GravityCompat.START) }
+
+        if (activity is MainActivity) {
+            Toast.makeText(activity, "On Back Pressed", Toast.LENGTH_SHORT).show()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> coreViewModel.onBackPressed()
+        }
+        return true
     }
 
     fun setNavigationDrawerContentView(childLayoutRes: Int) {
         binding = DataBindingUtil.inflate(layoutInflater, childLayoutRes, null, false)
         val lp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0)
         lp.weight = 1F
-        coreBinding.includedNavigationDrawer!!.includedAppBar!!.navigationDrawerContent!!.container.addView(binding.root, 0, lp)
+        navigationDrawerBinding.includedAppBar!!.navigationDrawerContent!!.container.addView(binding.root, 0, lp)
     }
 
     fun setDefaults(activity: T, layoutRes: Int) {
@@ -57,30 +67,48 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
         this.layoutRes = layoutRes
         if (hasNavigationDrawer()) {
             setUpNavigationDrawer(activity, layoutRes)
-            if (hasBottomNavigation())
+            if (hasBottomNavigation()) {
                 coreViewModel.hasBottom_DrawerNav.set(true)
+                setBottomNavDrawerMenu(bottom_navigation_nav_drawer)
+            }
         } else {
             setActionBar(layoutRes)
-            if (hasBottomNavigation())
+            if (hasBottomNavigation()) {
                 coreViewModel.hasBottomNavigation.set(true)
+                setBottomNavDrawerMenu(bottom_navigation)
+            }
         }
+    }
+
+    fun setActionBarTitle(title: String) {
+        if (isCustomActionbar())
+            coreViewModel.actionBarTitle.set(title)
+        else
+            activity.title = title
     }
 
     private fun setUpNavigationDrawer(activity: T, layoutRes: Int) {
         removeActionBar()
         coreBinding = DataBindingUtil.setContentView(this, R.layout.activity_core)
+        navigationDrawerBinding = DataBindingUtil.inflate(layoutInflater, R.layout.activity_drawer, null, false)
+        setContentView(navigationDrawerBinding.root)
         setCoreVM()
+        setNavDrawerVM()
         coreViewModel.hasNavigationDrawer.set(true)
         activity.setSupportActionBar(toolbar_navigation_drawer)
         activity.title = getActionBarTitle()
         setNavigationDrawerContentView(layoutRes)
         setVM(binding)
-        setNavigationDrawerMenu(nav_view, coreViewModel)
-        setNavigationDrawerHeader(nav_view, coreViewModel)
+        setNavigationDrawerMenu(nav_view)
+        setNavigationDrawerHeader(nav_view)
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar_navigation_drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
+    }
+
+    private fun setNavDrawerVM() {
+        navigationDrawerBinding.vm = coreViewModel
     }
 
     private fun setActionBar(childLayoutRes: Int) {
@@ -106,14 +134,14 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
     }
 
     private fun setDefaultActionBarProperties(actionBarTitle: String, isBackEnabled: Boolean) {
-        activity.title = actionBarTitle
+        setActionBarTitle(actionBarTitle)
         activity.supportActionBar?.setDisplayHomeAsUpEnabled(isBackEnabled)
         activity.supportActionBar?.setDisplayShowHomeEnabled(isBackEnabled)
     }
 
     private fun setCustomActionBarProperties(isCustomActionBar: Boolean, actionBarTitle: String, isBackEnabled: Boolean) {
         coreViewModel.isCustomActionbar.set(isCustomActionBar)
-        coreViewModel.actionBarTitle.set(actionBarTitle)
+        setActionBarTitle(actionBarTitle)
         coreViewModel.isBackEnabled.set(isBackEnabled)
     }
 
@@ -125,35 +153,47 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
         coreBinding = DataBindingUtil.setContentView(this, R.layout.activity_core)
         binding = DataBindingUtil.inflate(layoutInflater, childLayoutRes, null, false)
         setContentView(binding.root)
-        setVM(binding)
         setCoreVM()
+        setVM(binding)
     }
 
     private fun setCoreVM() {
         coreBinding.vm = coreViewModel
     }
 
-    private fun createCoreViewModel(): CoreViewModel {
-        return CoreViewModel(activity)
+    private fun createCoreViewModel(): ActivityViewModel {
+        return ActivityViewModel(activity)
     }
 
     abstract fun setVM(binding: DB)
 
     abstract fun createViewModel(activity: T): VM
 
-    abstract fun hasActionbar(): Boolean
-
-    abstract fun isCustomActionbar(): Boolean
-
-    abstract fun isBackEnabled(): Boolean
-
     abstract fun getActionBarTitle(): String
 
-    abstract fun hasNavigationDrawer(): Boolean
+    open fun hasActionbar(): Boolean {
+        return true
+    }
 
-    abstract fun setNavigationDrawerMenu(navigationView: NavigationView, coreViewModel: CoreViewModel)
+    open fun isCustomActionbar(): Boolean {
+        return false
+    }
 
-    abstract fun setNavigationDrawerHeader(navigationView: NavigationView, coreViewModel: CoreViewModel)
+    open fun isBackEnabled(): Boolean {
+        return false
+    }
 
-    abstract fun hasBottomNavigation(): Boolean
+    open fun hasNavigationDrawer(): Boolean {
+        return false
+    }
+
+    open fun setNavigationDrawerMenu(navigationView: NavigationView) {}
+
+    open fun setNavigationDrawerHeader(navigationView: NavigationView) {}
+
+    open fun hasBottomNavigation(): Boolean {
+        return false
+    }
+
+    open fun setBottomNavDrawerMenu(bottomNavigation: BottomNavigationView) {}
 }

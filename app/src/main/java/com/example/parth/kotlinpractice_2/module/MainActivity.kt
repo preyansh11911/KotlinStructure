@@ -2,12 +2,14 @@ package com.example.parth.kotlinpractice_2.module
 
 import android.content.Context
 import android.content.Intent
+import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.NavigationView
 import com.example.parth.kotlinpractice_2.R
 import com.example.parth.kotlinpractice_2.databinding.ActivityMainBinding
+import com.example.parth.kotlinpractice_2.databinding.NavHeaderDrawerBinding
 import com.example.parth.kotlinpractice_2.support.CoreActivity
-import com.example.parth.kotlinpractice_2.support.CoreViewModel
 
 class MainActivity : CoreActivity<MainActivity,ActivityMainBinding, MainViewModel>() {
 
@@ -21,8 +23,6 @@ class MainActivity : CoreActivity<MainActivity,ActivityMainBinding, MainViewMode
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setDefaults(this,R.layout.activity_main)
-
-//        startActivity(DrawerActivity.getIntent(this))
     }
 
     override fun setVM(binding: ActivityMainBinding) {
@@ -33,35 +33,27 @@ class MainActivity : CoreActivity<MainActivity,ActivityMainBinding, MainViewMode
         return MainViewModel(activity)
     }
 
-    override fun hasActionbar(): Boolean {
-        return true
-    }
-
-    override fun isCustomActionbar(): Boolean {
-        return false
-    }
-
-    override fun isBackEnabled(): Boolean {
-        return false
-    }
-
     override fun getActionBarTitle(): String {
-        return "Presh Activity"
+        return "Preyansh Activity"
     }
 
     override fun hasNavigationDrawer(): Boolean {
-        return false
+        return true
     }
 
-    override fun setNavigationDrawerMenu(navigationView: NavigationView, coreViewModel: CoreViewModel) {
-        coreViewModel.setNavigationDrawerMenu(navigationView, R.menu.bottom_navigation_menu)
+    override fun setNavigationDrawerMenu(navigationView: NavigationView) {
+        navigationView.inflateMenu(R.menu.activity_drawer_drawer)
     }
 
-    override fun setNavigationDrawerHeader(navigationView: NavigationView, coreViewModel: CoreViewModel) {
-        coreViewModel.setNavigationDrawerHeader(navigationView, R.layout.nav_header_drawer)
+    override fun setNavigationDrawerHeader(navigationView: NavigationView) {
+        val navHeaderBinding = DataBindingUtil.inflate<NavHeaderDrawerBinding>(
+                activity.layoutInflater, R.layout.nav_header_drawer, null, false)
+        navigationView.addHeaderView(navHeaderBinding.root)
+        navHeaderBinding.vm = viewModel
     }
 
-    override fun hasBottomNavigation(): Boolean {
-        return false
+    override fun setBottomNavDrawerMenu(bottomNavigation: BottomNavigationView) {
+        bottomNavigation.inflateMenu(R.menu.bottom_navigation_menu)
     }
+
 }

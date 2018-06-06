@@ -6,7 +6,7 @@
         <import type="android.view.View"/>
         <variable
             name="vm"
-            type="com.example.parth.kotlinpractice_2.support.CoreViewModel" />
+            type="com.example.parth.kotlinpractice_2.support.ActivityViewModel" />
     </data>
 
     <android.support.v7.widget.Toolbar

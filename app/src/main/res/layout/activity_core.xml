@@ -8,7 +8,7 @@
 
         <variable
             name="vm"
-            type="com.example.parth.kotlinpractice_2.support.CoreViewModel" />
+            type="com.example.parth.kotlinpractice_2.support.ActivityViewModel" />
     </data>
 
     <LinearLayout
@@ -37,11 +37,11 @@
 
 
             <!-- Add Navigation drawer here -->
-            <include
-                android:id="@+id/included_navigation_drawer"
-                layout="@layout/activity_drawer"
-                android:visibility="@{vm.hasNavigationDrawer ? View.VISIBLE : View.GONE}"
-                app:vm="@{vm}" />
+            <!--<include-->
+            <!--android:id="@+id/included_navigation_drawer"-->
+            <!--layout="@layout/activity_drawer"-->
+            <!--android:visibility="@{vm.hasNavigationDrawer ? View.VISIBLE : View.GONE}"-->
+            <!--app:vm="@{vm}" />-->
 
         </LinearLayout>
 
