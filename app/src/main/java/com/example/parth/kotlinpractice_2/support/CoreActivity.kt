@@ -11,12 +11,15 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.Toast
 import com.example.parth.kotlinpractice_2.R
-import com.example.parth.kotlinpractice_2.R.id.*
 import com.example.parth.kotlinpractice_2.databinding.ActivityCoreBinding
 import com.example.parth.kotlinpractice_2.databinding.ActivityDrawerBinding
-import com.example.parth.kotlinpractice_2.module.MainActivity
+import com.example.parth.kotlinpractice_2.kotlin.showConfirmationDialog
+import kotlinx.android.synthetic.main.activity_core.*
+import kotlinx.android.synthetic.main.activity_drawer.*
+import kotlinx.android.synthetic.main.app_bar_drawer.*
+import kotlinx.android.synthetic.main.content_drawer.*
+import kotlinx.android.synthetic.main.tool_bar.*
 
 
 abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, VM : ActivityViewModel> : AppCompatActivity() {
@@ -39,18 +42,20 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
     }
 
     override fun onBackPressed() {
-        drawer_layout.let { if (it.isDrawerOpen(GravityCompat.START)) it.closeDrawer(GravityCompat.START) }
+        drawer_layout?.let { if (it.isDrawerOpen(GravityCompat.START)) it.closeDrawer(GravityCompat.START) }
 
-        if (activity is MainActivity) {
-            Toast.makeText(activity, "On Back Pressed", Toast.LENGTH_SHORT).show()
+        if (!isBackEnabled()) {
+            showConfirmationDialog(posButtonText = "YEAH", postiveClick = ::setActionBarTitle)
+
         } else {
             super.onBackPressed()
         }
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            android.R.id.home -> coreViewModel.onBackPressed()
+            android.R.id.home -> this.onBackPressed()
         }
         return true
     }
@@ -78,6 +83,15 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
                 setBottomNavDrawerMenu(bottom_navigation)
             }
         }
+    }
+
+    fun setActionBarTitle() {
+//        if (isCustomActionbar())
+
+//            coreViewModel.actionBarTitle.set(title)
+//        else
+//            activity.title = title
+
     }
 
     fun setActionBarTitle(title: String) {

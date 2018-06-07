@@ -38,7 +38,7 @@ class MainActivity : CoreActivity<MainActivity,ActivityMainBinding, MainViewMode
     }
 
     override fun hasNavigationDrawer(): Boolean {
-        return true
+        return false
     }
 
     override fun setNavigationDrawerMenu(navigationView: NavigationView) {

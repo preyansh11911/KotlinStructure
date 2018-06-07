@@ -19,6 +19,7 @@ class MainViewModel(_activity: MainActivity) : ActivityViewModel(_activity) {
             navHeaderTitle.set("Navigation Title")
             navHeaderContent.set("This is Navigation header content")
         }, 3000)
+
     }
 
     fun onSecondClick(view: View) {

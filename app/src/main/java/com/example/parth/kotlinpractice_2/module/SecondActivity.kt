@@ -40,5 +40,7 @@ class SecondActivity : CoreActivity<SecondActivity, ActivitySecondBinding, Secon
         return "Second Activity"
     }
 
-
+    override fun isBackEnabled(): Boolean {
+        return intent.getBooleanExtra(Constants.BACK_KEY, false)
+    }
 }
