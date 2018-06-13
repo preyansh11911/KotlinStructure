@@ -20,20 +20,23 @@ open class ActivityViewModel(_activity: Activity) : BaseObservable() {
         activity.onBackPressed()
     }
 
-//    fun onBackPressed() {
-//
-//        activity.drawer_layout.let { if (it.isDrawerOpen(GravityCompat.START)) it.closeDrawer(GravityCompat.START) }
-//
-//        if (!isBackEnabled.get()) {
-//            Toast.makeText(activity, "On Back Pressed", Toast.LENGTH_SHORT).show()
-//        } else {
-//            activity.onBackPressed()
-//        }
-//    }
-
     fun startActivity(intent: Intent) {
         activity.startActivity(intent)
         if (!intent.getBooleanExtra(Constants.BACK_KEY, true))
             activity.finish()
+    }
+
+    fun getVisibility(): Int {
+        if (hasBottomNavigation.get())
+            return View.VISIBLE
+        else
+            return View.GONE
+    }
+
+    fun getVisi(): Int {
+        if (hasBottom_DrawerNav.get())
+            return View.VISIBLE
+        else
+            return View.GONE
     }
 }

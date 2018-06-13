@@ -23,6 +23,6 @@ class MainViewModel(_activity: MainActivity) : ActivityViewModel(_activity) {
     }
 
     fun onSecondClick(view: View) {
-        startActivity(SecondActivity.getIntent(coreActivity, false))
+        startActivity(SecondActivity.getIntent(coreActivity, isBackEnabled = true))
     }
 }

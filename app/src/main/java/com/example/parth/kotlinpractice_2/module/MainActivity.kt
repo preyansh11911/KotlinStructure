@@ -29,17 +29,11 @@ class MainActivity : CoreActivity<MainActivity,ActivityMainBinding, MainViewMode
         binding.vm = viewModel
     }
 
-    override fun createViewModel(activity: MainActivity): MainViewModel {
-        return MainViewModel(activity)
-    }
+    override fun createViewModel(activity: MainActivity): MainViewModel = MainViewModel(activity)
 
-    override fun getActionBarTitle(): String {
-        return "Preyansh Activity"
-    }
+    override fun getActionBarTitle(): String = getString(R.string.main_activity_title)
 
-    override fun hasNavigationDrawer(): Boolean {
-        return false
-    }
+    override fun hasNavigationDrawer(): Boolean = true
 
     override fun setNavigationDrawerMenu(navigationView: NavigationView) {
         navigationView.inflateMenu(R.menu.activity_drawer_drawer)
@@ -52,8 +46,10 @@ class MainActivity : CoreActivity<MainActivity,ActivityMainBinding, MainViewMode
         navHeaderBinding.vm = viewModel
     }
 
+    override fun hasBottomNavigation(): Boolean = true
+
     override fun setBottomNavDrawerMenu(bottomNavigation: BottomNavigationView) {
-        bottomNavigation.inflateMenu(R.menu.bottom_navigation_menu)
+        bottomNavigation.inflateMenu(R.menu.bottom_navigation)
     }
 
 }

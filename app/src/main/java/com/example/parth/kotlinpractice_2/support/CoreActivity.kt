@@ -14,7 +14,7 @@ import android.widget.LinearLayout
 import com.example.parth.kotlinpractice_2.R
 import com.example.parth.kotlinpractice_2.databinding.ActivityCoreBinding
 import com.example.parth.kotlinpractice_2.databinding.ActivityDrawerBinding
-import com.example.parth.kotlinpractice_2.kotlin.showConfirmationDialog
+import com.example.parth.kotlinpractice_2.kotlin.alert
 import kotlinx.android.synthetic.main.activity_core.*
 import kotlinx.android.synthetic.main.activity_drawer.*
 import kotlinx.android.synthetic.main.app_bar_drawer.*
@@ -31,10 +31,16 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
     lateinit var binding: DB
     var vm: VM? = null
     val viewModel: VM
-        get() = createViewModel(activity)
+        get() {
+            if (vm == null) vm = createViewModel(activity)
+            return vm!!
+        }
     var coreVM: ActivityViewModel? = null
     val coreViewModel: ActivityViewModel
-        get() = createCoreViewModel()
+        get() {
+            if (coreVM == null) coreVM = createCoreViewModel()
+            return coreVM!!
+        }
 
     override fun setContentView(childView: View?) {
         val lp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
@@ -45,8 +51,15 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
         drawer_layout?.let { if (it.isDrawerOpen(GravityCompat.START)) it.closeDrawer(GravityCompat.START) }
 
         if (!isBackEnabled()) {
-            showConfirmationDialog(posButtonText = "YEAH", postiveClick = ::setActionBarTitle)
-
+            alert {
+                icon(R.drawable.ic_app_exit)
+                title(R.string.alert_title)
+                message(R.string.alert_message)
+                positiveButtonClick(R.string.YES) { super.onBackPressed() }
+                negativeButtonClick(R.string.NO) { }
+                makeCancelable()
+                show()
+            }
         } else {
             super.onBackPressed()
         }
@@ -85,15 +98,6 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
         }
     }
 
-    fun setActionBarTitle() {
-//        if (isCustomActionbar())
-
-//            coreViewModel.actionBarTitle.set(title)
-//        else
-//            activity.title = title
-
-    }
-
     fun setActionBarTitle(title: String) {
         if (isCustomActionbar())
             coreViewModel.actionBarTitle.set(title)
@@ -126,20 +130,15 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
     }
 
     private fun setActionBar(childLayoutRes: Int) {
-        val hasActionBar = hasActionbar()
-        val isCustomActionBar = isCustomActionbar()
-        val isBackEnabled = isBackEnabled()
-        val actionBarTitle = getActionBarTitle()
-
-        if (hasActionBar) {
-            if (isCustomActionBar) {
+        if (hasActionbar()) {
+            if (isCustomActionbar()) {
                 removeActionBar()
                 setBindings(childLayoutRes)
-                setCustomActionBarProperties(isCustomActionBar, actionBarTitle, isBackEnabled)
+                setCustomActionBarProperties(isCustomActionbar(), getActionBarTitle(), isBackEnabled())
                 activity.setSupportActionBar(tool_bar_box)
             } else {
                 setBindings(childLayoutRes)
-                setDefaultActionBarProperties(actionBarTitle, isBackEnabled)
+                setDefaultActionBarProperties(getActionBarTitle(), isBackEnabled())
             }
         } else {
             removeActionBar()
@@ -210,4 +209,5 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
     }
 
     open fun setBottomNavDrawerMenu(bottomNavigation: BottomNavigationView) {}
+
 }

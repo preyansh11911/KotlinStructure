@@ -8,4 +8,12 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="demo_string">This is Preyansh. This is Preyansh. This is Preyansh. This is Preyansh. This is Preyansh. This is Preyansh. This is Preyansh.</string>
+    <string name="YES">YES</string>
+    <string name="alert_message">Are you sure that you want to exit from app?</string>
+    <string name="alert_title">App Exit</string>
+    <string name="main_activity_title">Preyansh Activity</string>
+    <string name="NO">NO</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
