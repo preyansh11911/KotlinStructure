@@ -5,4 +5,5 @@
     <color name="colorPrimaryDarkTransparent">#a7303f9f</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorNavigationDrawer">#7b93c1</color>
+    <color name="colorRipple">#cfba2357</color>
 </resources>

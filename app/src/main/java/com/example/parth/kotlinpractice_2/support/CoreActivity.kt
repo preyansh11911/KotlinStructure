@@ -2,7 +2,6 @@ package com.example.parth.kotlinpractice_2.support
 
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
-import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -15,10 +14,8 @@ import com.example.parth.kotlinpractice_2.R
 import com.example.parth.kotlinpractice_2.databinding.ActivityCoreBinding
 import com.example.parth.kotlinpractice_2.databinding.ActivityDrawerBinding
 import com.example.parth.kotlinpractice_2.kotlin.alert
-import kotlinx.android.synthetic.main.activity_core.*
 import kotlinx.android.synthetic.main.activity_drawer.*
 import kotlinx.android.synthetic.main.app_bar_drawer.*
-import kotlinx.android.synthetic.main.content_drawer.*
 import kotlinx.android.synthetic.main.tool_bar.*
 
 
@@ -65,7 +62,6 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
         }
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             android.R.id.home -> this.onBackPressed()
@@ -85,17 +81,18 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
         this.layoutRes = layoutRes
         if (hasNavigationDrawer()) {
             setUpNavigationDrawer(activity, layoutRes)
-            if (hasBottomNavigation()) {
-                coreViewModel.hasBottom_DrawerNav.set(true)
-                setBottomNavDrawerMenu(bottom_navigation_nav_drawer)
-            }
+//            if (hasBottomNavigation()) {
+//                coreViewModel.hasBottom_DrawerNav.set(true)
+//                setBottomNavDrawerMenu(bottom_navigation_nav_drawer)
+//            }
         } else {
             setActionBar(layoutRes)
-            if (hasBottomNavigation()) {
-                coreViewModel.hasBottomNavigation.set(true)
-                setBottomNavDrawerMenu(bottom_navigation)
-            }
+//            if (hasBottomNavigation()) {
+//                coreViewModel.hasBottomNavigation.set(true)
+//                setBottomNavDrawerMenu(bottom_navigation)
+//            }
         }
+        bottomNavigation()
     }
 
     fun setActionBarTitle(title: String) {
@@ -204,10 +201,10 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
 
     open fun setNavigationDrawerHeader(navigationView: NavigationView) {}
 
-    open fun hasBottomNavigation(): Boolean {
-        return false
-    }
+//    open fun hasBottomNavigation(): Boolean { return false }
+//
+//    open fun setBottomNavDrawerMenu(bottomNavigation: BottomNavigationView) {}
 
-    open fun setBottomNavDrawerMenu(bottomNavigation: BottomNavigationView) {}
+    open fun bottomNavigation() {}
 
 }

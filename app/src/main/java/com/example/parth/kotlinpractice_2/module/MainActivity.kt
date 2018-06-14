@@ -2,13 +2,16 @@ package com.example.parth.kotlinpractice_2.module
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.databinding.DataBindingUtil
+import android.graphics.Color
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
 import android.support.design.widget.NavigationView
+import android.support.v4.content.ContextCompat
 import com.example.parth.kotlinpractice_2.R
 import com.example.parth.kotlinpractice_2.databinding.ActivityMainBinding
 import com.example.parth.kotlinpractice_2.databinding.NavHeaderDrawerBinding
+import com.example.parth.kotlinpractice_2.kotlin.setBottomNavigation
 import com.example.parth.kotlinpractice_2.support.CoreActivity
 
 class MainActivity : CoreActivity<MainActivity,ActivityMainBinding, MainViewModel>() {
@@ -46,10 +49,28 @@ class MainActivity : CoreActivity<MainActivity,ActivityMainBinding, MainViewMode
         navHeaderBinding.vm = viewModel
     }
 
-    override fun hasBottomNavigation(): Boolean = true
+//    override fun hasBottomNavigation(): Boolean = true
+//
+//    override fun setBottomNavDrawerMenu(bottomNavigation: BottomNavigationView) {
+//        bottomNavigation.inflateMenu(R.menu.bottom_navigation)
+//    }
 
-    override fun setBottomNavDrawerMenu(bottomNavigation: BottomNavigationView) {
-        bottomNavigation.inflateMenu(R.menu.bottom_navigation)
+    override fun bottomNavigation() {
+        this.setBottomNavigation {
+            setMenu(R.menu.bottom_navigation)
+            setBackgroundColor(R.drawable.bottom_navigation_background_color)
+            setItemColor {
+                val states = arrayOf(
+                        intArrayOf(-android.R.attr.state_checked), // unchecked
+                        intArrayOf(android.R.attr.state_checked) // checked
+                )
+
+                val colors = intArrayOf(Color.WHITE, ContextCompat.getColor(coreActivity, R.color.colorPrimary))
+
+                ColorStateList(states, colors)
+            }
+            shiftModeEnabled(false)
+        }
     }
 
 }
