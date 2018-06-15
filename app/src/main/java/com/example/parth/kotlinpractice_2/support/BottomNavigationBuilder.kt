@@ -6,6 +6,7 @@ import android.support.design.internal.BottomNavigationItemView
 import android.support.design.internal.BottomNavigationMenuView
 import android.support.design.widget.BottomNavigationView
 import android.util.Log
+import com.example.parth.kotlinpractice_2.kotlin.getColor
 import kotlinx.android.synthetic.main.content_drawer.*
 
 
@@ -24,20 +25,59 @@ class BottomNavigationBuilder(val coreActivity: CoreActivity<*, *, *>) {
         }
     }
 
+    /**
+     * Sets the items to BottomNavigation.
+     * @param menuResID
+     * Pass MENU resource ID to be set in BottomNavigation
+     */
     fun setMenu(menuResID: Int) {
         view.inflateMenu(menuResID)
     }
 
+    /**
+     * Sets the BackgroundColor to BottomNavigation
+     * ID of DRAWABLE / COLOR resource can be passed here.
+     * To highlight the selected item background color,
+     * make a selector of your choice in drawable and pass its resource ID
+     *
+     * @param resID
+     * Pass DRAWABLE / COLOR resource ID to be set as BackgroundColor in BottomNavigation
+     */
     fun setBackgroundColor(resID: Int) {
         view.itemBackgroundResource = resID
     }
 
-    fun setItemColor(colorStateList: () -> ColorStateList) {
-        view.itemIconTintList = colorStateList()
-        view.itemTextColor = colorStateList()
+
+    /**
+     * This method changes icon color and text color of selected item
+     * @param selectedColorResID
+     * Pass COLOR resource ID to be set as
+     * Selected item icon color & text color in BottomNavigation
+     * @param defaultColorResID
+     * Pass COLOR resource ID to be set as
+     * Default item icon color & text color in BottomNavigation
+     */
+    fun setItemColor(selectedColorResID: Int, defaultColorResID: Int) {
+
+        val states = arrayOf(
+                intArrayOf(android.R.attr.state_checked), // checked
+                intArrayOf(-android.R.attr.state_checked) // unchecked
+        )
+
+        val colors = intArrayOf(
+                selectedColorResID.getColor(coreActivity),
+                defaultColorResID.getColor(coreActivity)
+        )
+
+        view.itemIconTintList = ColorStateList(states, colors)
+        view.itemTextColor = ColorStateList(states, colors)
     }
 
-
+    /**
+     * Use this method to enable / disable the shifting mode of BottomNavigation
+     * @param isShifting
+     * Pass TRUE/FALSE to enable/disable the shifting mode respectively
+     */
     @SuppressLint("RestrictedApi")
     fun shiftModeEnabled(isShifting: Boolean) {
         if (!isShifting) {

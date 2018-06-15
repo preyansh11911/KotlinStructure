@@ -13,7 +13,7 @@ import android.widget.LinearLayout
 import com.example.parth.kotlinpractice_2.R
 import com.example.parth.kotlinpractice_2.databinding.ActivityCoreBinding
 import com.example.parth.kotlinpractice_2.databinding.ActivityDrawerBinding
-import com.example.parth.kotlinpractice_2.kotlin.alert
+import com.example.parth.kotlinpractice_2.kotlin.showAlert
 import kotlinx.android.synthetic.main.activity_drawer.*
 import kotlinx.android.synthetic.main.app_bar_drawer.*
 import kotlinx.android.synthetic.main.tool_bar.*
@@ -48,7 +48,7 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
         drawer_layout?.let { if (it.isDrawerOpen(GravityCompat.START)) it.closeDrawer(GravityCompat.START) }
 
         if (!isBackEnabled()) {
-            alert {
+            showAlert {
                 icon(R.drawable.ic_app_exit)
                 title(R.string.alert_title)
                 message(R.string.alert_message)
@@ -205,6 +205,9 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
 //
 //    open fun setBottomNavDrawerMenu(bottomNavigation: BottomNavigationView) {}
 
+    /**
+     * Override this method to set BottomNavigation in activity
+     */
     open fun bottomNavigation() {}
 
 }

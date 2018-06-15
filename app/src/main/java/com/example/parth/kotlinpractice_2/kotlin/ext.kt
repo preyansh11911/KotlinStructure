@@ -9,7 +9,7 @@ import com.example.parth.kotlinpractice_2.support.AlertDialogBuilder
 import com.example.parth.kotlinpractice_2.support.BottomNavigationBuilder
 import com.example.parth.kotlinpractice_2.support.CoreActivity
 
-fun Context.alert(alertDialog: AlertDialogBuilder.() -> Unit) = AlertDialogBuilder(this).apply(alertDialog)
+fun Context.showAlert(alertDialog: AlertDialogBuilder.() -> Unit) = AlertDialogBuilder(this).apply(alertDialog)
 
 fun Fragment.toast(msg: String, duration: Duration) {
     activity?.toast(msg, duration)
@@ -27,8 +27,8 @@ fun Context.toast(msg: String, duration: Duration) {
     Toast.makeText(this, msg, dur).show()
 }
 
-fun snack(v: View, msg: String) {
-    Snackbar.make(v, msg, Snackbar.LENGTH_SHORT)
+fun View.snack(msg: String) {
+    Snackbar.make(this, msg, Snackbar.LENGTH_SHORT)
 }
 
 enum class Duration {
