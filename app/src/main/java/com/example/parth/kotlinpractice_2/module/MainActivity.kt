@@ -5,6 +5,7 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.view.View
 import com.example.parth.kotlinpractice_2.R
 import com.example.parth.kotlinpractice_2.databinding.ActivityMainBinding
 import com.example.parth.kotlinpractice_2.databinding.NavHeaderDrawerBinding
@@ -40,17 +41,10 @@ class MainActivity : CoreActivity<MainActivity,ActivityMainBinding, MainViewMode
     }
 
     override fun setNavigationDrawerHeader(navigationView: NavigationView) {
-        val navHeaderBinding = DataBindingUtil.inflate<NavHeaderDrawerBinding>(
-                activity.layoutInflater, R.layout.nav_header_drawer, null, false)
-        navigationView.addHeaderView(navHeaderBinding.root)
-        navHeaderBinding.vm = viewModel
+        val headerView: View = navigationView.inflateHeaderView(R.layout.nav_header_drawer)
+        val navHeaderBinding = DataBindingUtil.bind<NavHeaderDrawerBinding>(headerView)
+        navHeaderBinding?.vm = viewModel
     }
-
-//    override fun hasBottomNavigation(): Boolean = true
-//
-//    override fun setBottomNavDrawerMenu(bottomNavigation: BottomNavigationView) {
-//        bottomNavigation.inflateMenu(R.menu.bottom_navigation)
-//    }
 
     override fun bottomNavigation() {
         this.setBottomNavigation {
@@ -60,5 +54,4 @@ class MainActivity : CoreActivity<MainActivity,ActivityMainBinding, MainViewMode
             shiftModeEnabled(false)
         }
     }
-
 }
