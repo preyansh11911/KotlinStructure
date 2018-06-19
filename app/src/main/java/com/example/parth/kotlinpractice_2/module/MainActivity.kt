@@ -12,7 +12,7 @@ import com.example.parth.kotlinpractice_2.databinding.NavHeaderDrawerBinding
 import com.example.parth.kotlinpractice_2.kotlin.setBottomNavigation
 import com.example.parth.kotlinpractice_2.support.CoreActivity
 
-class MainActivity : CoreActivity<MainActivity,ActivityMainBinding, MainViewModel>() {
+class MainActivity : CoreActivity<MainActivity, ActivityMainBinding, MainViewModel>() {
 
     companion object {
         fun getIntent(context: Context): Intent {
@@ -23,7 +23,7 @@ class MainActivity : CoreActivity<MainActivity,ActivityMainBinding, MainViewMode
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setDefaults(this,R.layout.activity_main)
+        setDefaults(this, R.layout.activity_main)
     }
 
     override fun setVM(binding: ActivityMainBinding) {
@@ -47,11 +47,16 @@ class MainActivity : CoreActivity<MainActivity,ActivityMainBinding, MainViewMode
     }
 
     override fun bottomNavigation() {
-        this.setBottomNavigation {
+        setBottomNavigation {
             setMenu(R.menu.bottom_navigation)
             setBackgroundColor(R.drawable.bottom_navigation_background_color)
             setItemColor(R.color.colorAccent, android.R.color.white)
             shiftModeEnabled(false)
+            itemSelectedHandler { view ->
+                view.setOnNavigationItemSelectedListener { item ->
+                    viewModel.bottomNavigationClickHandler(item)
+                }
+            }
         }
     }
 }

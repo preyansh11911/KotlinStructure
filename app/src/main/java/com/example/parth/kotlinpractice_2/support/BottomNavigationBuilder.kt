@@ -102,5 +102,9 @@ class BottomNavigationBuilder(val coreActivity: CoreActivity<*, *, *>) {
             }
         }
     }
+
+    fun itemSelectedHandler(navigation: (BottomNavigationView) -> Unit) {
+        navigation(view)
+    }
 }
 

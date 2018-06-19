@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/nav_camera"
+        android:id="@+id/bottom_nav_camera"
         android:icon="@drawable/ic_menu_camera"
         android:title="Import" />
     <item
-        android:id="@+id/nav_gallery"
+        android:id="@+id/bottom_nav_gallery"
         android:icon="@drawable/ic_menu_gallery"
         android:title="Gallery" />
     <item
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/bottom_nav_slideshow"
         android:icon="@drawable/ic_menu_slideshow"
         android:title="Slideshow" />
     <item
-        android:id="@+id/nav_manage"
+        android:id="@+id/bottom_nav_manage"
         android:icon="@drawable/ic_menu_manage"
         android:title="Tools" />
 
