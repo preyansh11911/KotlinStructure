@@ -13,9 +13,6 @@ class MainViewModel(_activity: MainActivity) : ActivityViewModel(_activity) {
     var coreActivity = _activity
     var text = ObservableField<String>("Preyansh from MainViewModel")
 
-    var navHeaderTitle = ObservableField<String>("")
-    var navHeaderContent = ObservableField<String>("")
-
     init {
         Handler().postDelayed(Runnable {
             coreActivity.setActionBarTitle("New Title")

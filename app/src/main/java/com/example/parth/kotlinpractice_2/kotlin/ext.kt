@@ -5,9 +5,7 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.View
 import android.widget.Toast
-import com.example.parth.kotlinpractice_2.support.AlertDialogBuilder
-import com.example.parth.kotlinpractice_2.support.BottomNavigationBuilder
-import com.example.parth.kotlinpractice_2.support.CoreActivity
+import com.example.parth.kotlinpractice_2.support.*
 
 fun Context.showAlert(alertDialog: AlertDialogBuilder.() -> Unit) = AlertDialogBuilder(this).apply(alertDialog)
 
@@ -35,4 +33,5 @@ enum class Duration {
     SHORT, LONG, INDEFINITE
 }
 
-fun CoreActivity<*, *, *>.setBottomNavigation(builder: BottomNavigationBuilder.() -> Unit) = BottomNavigationBuilder(this).apply(builder)
+fun CoreActivity<*, *, *>.setUpBottomNavigation(builder: BottomNavigationBuilder.() -> Unit) = BottomNavigationBuilder(this).apply(builder)
+fun CoreActivity<*, *, *>.setUpNavigationDrawer(viewModel: ActivityViewModel, builder: NavigationDrawerBuilder.() -> Unit) = NavigationDrawerBuilder(this, viewModel).apply(builder)

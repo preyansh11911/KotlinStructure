@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="com.example.parth.kotlinpractice_2.module.MainViewModel" />
+            type="com.example.parth.kotlinpractice_2.support.ActivityViewModel" />
 
     </data>
 

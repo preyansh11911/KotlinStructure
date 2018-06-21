@@ -16,6 +16,9 @@ open class ActivityViewModel(_activity: Activity) : BaseObservable() {
     var hasBottom_DrawerNav = ObservableBoolean(false)
     var hasBottomNavigation = ObservableBoolean(false)
 
+    var navHeaderTitle = ObservableField<String>("")
+    var navHeaderContent = ObservableField<String>("")
+
     fun onBackPressed(view: View) {
         activity.onBackPressed()
     }

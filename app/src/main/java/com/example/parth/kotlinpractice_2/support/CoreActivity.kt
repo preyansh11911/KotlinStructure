@@ -2,7 +2,6 @@ package com.example.parth.kotlinpractice_2.support
 
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
-import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -38,6 +37,7 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
             if (coreVM == null) coreVM = createCoreViewModel()
             return coreVM!!
         }
+    var hasNavigationDrawer: Boolean = false
 
     override fun setContentView(childView: View?) {
         val lp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
@@ -79,13 +79,15 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
     fun setDefaults(activity: T, layoutRes: Int) {
         this.activity = activity
         this.layoutRes = layoutRes
-        if (hasNavigationDrawer()) {
-            setUpNavigationDrawer(activity, layoutRes)
+        navigationDrawer()
+//        if (hasNavigationDrawer) {
+//            setNavigationDrawer()
 //            if (hasBottomNavigation()) {
 //                coreViewModel.hasBottom_DrawerNav.set(true)
 //                setBottomNavDrawerMenu(bottom_navigation_nav_drawer)
 //            }
-        } else {
+//        }
+        if (!hasNavigationDrawer) {
             setActionBar(layoutRes)
 //            if (hasBottomNavigation()) {
 //                coreViewModel.hasBottomNavigation.set(true)
@@ -93,6 +95,7 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
 //            }
         }
         bottomNavigation()
+        workArea(viewModel)
     }
 
     fun setActionBarTitle(title: String) {
@@ -102,7 +105,7 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
             activity.title = title
     }
 
-    private fun setUpNavigationDrawer(activity: T, layoutRes: Int) {
+    fun setNavigationDrawer() {
         removeActionBar()
         coreBinding = DataBindingUtil.setContentView(this, R.layout.activity_core)
         navigationDrawerBinding = DataBindingUtil.inflate(layoutInflater, R.layout.activity_drawer, null, false)
@@ -114,8 +117,8 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
         activity.title = getActionBarTitle()
         setNavigationDrawerContentView(layoutRes)
         setVM(binding)
-        setNavigationDrawerMenu(nav_view)
-        setNavigationDrawerHeader(nav_view)
+//        setNavigationDrawerMenu(nav_view)
+//        setNavigationDrawerHeader(nav_view)
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar_navigation_drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
@@ -181,6 +184,8 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
 
     abstract fun getActionBarTitle(): String
 
+    abstract fun workArea(viewModel: VM)
+
     open fun hasActionbar(): Boolean {
         return true
     }
@@ -193,21 +198,22 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
         return false
     }
 
-    open fun hasNavigationDrawer(): Boolean {
-        return false
-    }
-
-    open fun setNavigationDrawerMenu(navigationView: NavigationView) {}
-
-    open fun setNavigationDrawerHeader(navigationView: NavigationView) {}
-
-//    open fun hasBottomNavigation(): Boolean { return false }
+//    open fun hasNavigationDrawer(): Boolean {
+//        return false
+//    }
 //
-//    open fun setBottomNavDrawerMenu(bottomNavigation: BottomNavigationView) {}
+//    open fun setNavigationDrawerMenu(navigationView: NavigationView) {}
+//
+//    open fun setNavigationDrawerHeader(navigationView: NavigationView) {}
 
     /**
      * Override this method to set BottomNavigation in activity
      */
     open fun bottomNavigation() {}
 
+
+    /**
+     * Override this method to set NavigationDrawer in activity
+     */
+    open fun navigationDrawer() {}
 }

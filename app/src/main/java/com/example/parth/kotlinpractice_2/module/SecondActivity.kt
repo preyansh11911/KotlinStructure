@@ -32,6 +32,10 @@ class SecondActivity : CoreActivity<SecondActivity, ActivitySecondBinding, Secon
         binding.vm = viewModel
     }
 
+    override fun workArea(viewModel: SecondViewModel) {
+
+    }
+
     override fun createViewModel(activity: SecondActivity): SecondViewModel {
         return SecondViewModel(activity)
     }

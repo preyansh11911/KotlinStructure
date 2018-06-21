@@ -15,8 +15,7 @@ class BottomNavigationBuilder(val coreActivity: CoreActivity<*, *, *>) {
     var view: BottomNavigationView
 
     init {
-
-        if (coreActivity.hasNavigationDrawer()) {
+        if (coreActivity.hasNavigationDrawer) {
             coreActivity.coreViewModel.hasBottom_DrawerNav.set(true)
             view = coreActivity.bottom_navigation_nav_drawer
         } else {
