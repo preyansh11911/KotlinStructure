@@ -8,12 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.parth.kotlinpractice_2.R
+import com.example.parth.kotlinpractice_2.support.CoreFragment
 
 /**
  * A simple [Fragment] subclass.
  *
  */
-class CameraFragment : Fragment() {
+class CameraFragment : CoreFragment() {
+
+    companion object {
+        fun newInstance() = CameraFragment()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment

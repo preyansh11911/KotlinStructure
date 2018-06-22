@@ -7,6 +7,7 @@ import android.support.design.internal.BottomNavigationMenuView
 import android.support.design.widget.BottomNavigationView
 import android.util.Log
 import com.example.parth.kotlinpractice_2.kotlin.getColor
+import kotlinx.android.synthetic.main.activity_core.*
 import kotlinx.android.synthetic.main.content_drawer.*
 
 
@@ -20,7 +21,7 @@ class BottomNavigationBuilder(val coreActivity: CoreActivity<*, *, *>) {
             view = coreActivity.bottom_navigation_nav_drawer
         } else {
             coreActivity.coreViewModel.hasBottomNavigation.set(true)
-            view = coreActivity.bottom_navigation_nav_drawer
+            view = coreActivity.bottom_navigation
         }
     }
 

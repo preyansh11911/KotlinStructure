@@ -1,30 +1,26 @@
 package com.example.parth.kotlinpractice_2.module
 
 import android.databinding.ObservableField
-import android.os.Handler
 import android.view.MenuItem
 import android.view.View
 import com.example.parth.kotlinpractice_2.R
+import com.example.parth.kotlinpractice_2.camera.CameraFragment
 import com.example.parth.kotlinpractice_2.kotlin.Duration
+import com.example.parth.kotlinpractice_2.kotlin.launchFragment
 import com.example.parth.kotlinpractice_2.kotlin.toast
 import com.example.parth.kotlinpractice_2.support.ActivityViewModel
 
-class MainViewModel(_activity: MainActivity) : ActivityViewModel(_activity) {
-    var coreActivity = _activity
+class MainViewModel(val coreActivity: MainActivity) : ActivityViewModel(coreActivity) {
     var text = ObservableField<String>("Preyansh from MainViewModel")
-
-    init {
-        Handler().postDelayed(Runnable {
-            coreActivity.setActionBarTitle("New Title")
-
-            navHeaderTitle.set("Navigation Title")
-            navHeaderContent.set("This is Navigation header content")
-        }, 3000)
-
-    }
 
     fun onSecondClick(view: View) {
         startActivity(SecondActivity.getIntent(coreActivity, isBackEnabled = true))
+    }
+
+    fun launchCameraFrag() {
+        CameraFragment.newInstance().let {
+            coreActivity.launchFragment(title = "Camera Fragment", addToBackStack = false, fragment = it, containerId = R.id.box_home_layout)
+        }
     }
 
     fun bottomNavigationClickHandler(menuItem: MenuItem): Boolean {

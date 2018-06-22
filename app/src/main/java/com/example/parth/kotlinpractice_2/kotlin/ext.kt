@@ -9,6 +9,23 @@ import com.example.parth.kotlinpractice_2.support.*
 
 fun Context.showAlert(alertDialog: AlertDialogBuilder.() -> Unit) = AlertDialogBuilder(this).apply(alertDialog)
 
+fun CoreActivity<*, *, *>.launchFragment(title: String = "title", addToBackStack: Boolean = false, fragment: CoreFragment, containerId: Int) {
+    getSupportFragmentManager().beginTransaction().apply {
+        if (addToBackStack)
+            add(containerId, fragment)
+        else
+            replace(containerId, fragment)
+        commit()
+    }
+    setActionBarTitle(title)
+}
+
+fun <T : CoreFragment> CoreActivity<*, *, *>.startFragment(fragment: Class<T>, title: String = "title", addToBackStack: Boolean = false, containerId: Int) {
+    fragment.newInstance().let {
+        launchFragment(fragment = it, )
+    }
+}
+
 fun Fragment.toast(msg: String, duration: Duration) {
     activity?.toast(msg, duration)
 }

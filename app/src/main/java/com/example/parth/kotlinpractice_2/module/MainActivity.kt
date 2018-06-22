@@ -27,7 +27,7 @@ class MainActivity : CoreActivity<MainActivity, ActivityMainBinding, MainViewMod
     }
 
     override fun workArea(viewModel: MainViewModel) {
-
+        viewModel.launchCameraFrag()
     }
 
     override fun createViewModel(activity: MainActivity): MainViewModel = MainViewModel(activity)
@@ -59,9 +59,9 @@ class MainActivity : CoreActivity<MainActivity, ActivityMainBinding, MainViewMod
             setBackgroundColor(R.drawable.bottom_navigation_background_color)
             setItemColor(R.color.colorAccent, android.R.color.white)
             shiftModeEnabled(false)
-            itemSelectedHandler { view ->
-                view.setOnNavigationItemSelectedListener { item ->
-                    viewModel.bottomNavigationClickHandler(item)
+            itemSelectedHandler {
+                it.setOnNavigationItemSelectedListener {
+                    viewModel.bottomNavigationClickHandler(it)
                 }
             }
         }

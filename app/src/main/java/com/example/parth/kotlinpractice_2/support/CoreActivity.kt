@@ -88,7 +88,7 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
 //            }
 //        }
         if (!hasNavigationDrawer) {
-            setActionBar(layoutRes)
+            setActionBar()
 //            if (hasBottomNavigation()) {
 //                coreViewModel.hasBottomNavigation.set(true)
 //                setBottomNavDrawerMenu(bottom_navigation)
@@ -129,20 +129,20 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
         navigationDrawerBinding.vm = coreViewModel
     }
 
-    private fun setActionBar(childLayoutRes: Int) {
+    private fun setActionBar() {
         if (hasActionbar()) {
             if (isCustomActionbar()) {
                 removeActionBar()
-                setBindings(childLayoutRes)
+                setBindings(layoutRes)
                 setCustomActionBarProperties(isCustomActionbar(), getActionBarTitle(), isBackEnabled())
                 activity.setSupportActionBar(tool_bar_box)
             } else {
-                setBindings(childLayoutRes)
+                setBindings(layoutRes)
                 setDefaultActionBarProperties(getActionBarTitle(), isBackEnabled())
             }
         } else {
             removeActionBar()
-            setBindings(childLayoutRes)
+            setBindings(layoutRes)
         }
     }
 
@@ -197,14 +197,6 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
     open fun isBackEnabled(): Boolean {
         return false
     }
-
-//    open fun hasNavigationDrawer(): Boolean {
-//        return false
-//    }
-//
-//    open fun setNavigationDrawerMenu(navigationView: NavigationView) {}
-//
-//    open fun setNavigationDrawerHeader(navigationView: NavigationView) {}
 
     /**
      * Override this method to set BottomNavigation in activity
