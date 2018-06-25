@@ -4,24 +4,20 @@
 
     <data>
 
-        <variable
-            name="vm"
-            type="com.example.parth.kotlinpractice_2.camera.CameraViewModel" />
-
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".camera.CameraFragment">
+        tools:context=".tools.ToolsFragment">
 
         <!-- TODO: Update blank fragment layout -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/holo_green_light"
+            android:background="@android:color/holo_purple"
             android:gravity="center"
-            android:text="Hello CAMERA Fragment" />
+            android:text="Hello MANAGE Fragment" />
 
     </RelativeLayout>
 </layout>

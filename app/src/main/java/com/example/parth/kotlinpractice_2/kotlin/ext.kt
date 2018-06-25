@@ -5,11 +5,17 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.View
 import android.widget.Toast
+import com.example.parth.kotlinpractice_2.R
 import com.example.parth.kotlinpractice_2.support.*
 
 fun Context.showAlert(alertDialog: AlertDialogBuilder.() -> Unit) = AlertDialogBuilder(this).apply(alertDialog)
 
-fun CoreActivity<*, *, *>.launchFragment(title: String = "title", addToBackStack: Boolean = false, fragment: CoreFragment, containerId: Int) {
+fun CoreActivity<*, *, *>.launchFragment(
+        title: String = "title",
+        addToBackStack: Boolean = false,
+        fragment: CoreFragment<*, *>,
+        containerId: Int
+) {
     getSupportFragmentManager().beginTransaction().apply {
         if (addToBackStack)
             add(containerId, fragment)
@@ -20,9 +26,15 @@ fun CoreActivity<*, *, *>.launchFragment(title: String = "title", addToBackStack
     setActionBarTitle(title)
 }
 
-fun <T : CoreFragment> CoreActivity<*, *, *>.startFragment(fragment: Class<T>, title: String = "title", addToBackStack: Boolean = false, containerId: Int) {
+fun CoreActivity<*, *, *>.startFragment(
+        fragment: CoreFragment<*, *>,
+        title: String = "title",
+        addToBackStack: Boolean = false,
+        containerId: Int = R.id.box_home_layout
+) {
+
     fragment.newInstance().let {
-        launchFragment(fragment = it, )
+        launchFragment(fragment = it, title = title, containerId = containerId, addToBackStack = addToBackStack)
     }
 }
 

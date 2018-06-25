@@ -1,25 +1,13 @@
 package com.example.parth.kotlinpractice_2.gallery
 
 
-import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-
 import com.example.parth.kotlinpractice_2.R
+import com.example.parth.kotlinpractice_2.databinding.FragmentGalleryBinding
+import com.example.parth.kotlinpractice_2.support.CoreFragment
 
-class GalleryFragment : Fragment() {
+class GalleryFragment : CoreFragment<GalleryFragment, FragmentGalleryBinding>() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_gallery, container, false)
-    }
+    override fun getFragmentContext(): GalleryFragment = this
 
-
-    companion object {
-        fun newInstance() = GalleryFragment()
-    }
-
+    override fun getLayoutView(): Int = R.layout.fragment_gallery
 }
