@@ -10,12 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.example.parth.kotlinpractice_2.R
+import com.example.parth.kotlinpractice_2.R.id.*
 import com.example.parth.kotlinpractice_2.databinding.ActivityCoreBinding
 import com.example.parth.kotlinpractice_2.databinding.ActivityDrawerBinding
 import com.example.parth.kotlinpractice_2.kotlin.showAlert
-import kotlinx.android.synthetic.main.activity_drawer.*
-import kotlinx.android.synthetic.main.app_bar_drawer.*
-import kotlinx.android.synthetic.main.tool_bar.*
 
 
 abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, VM : ActivityViewModel> : AppCompatActivity() {
@@ -45,7 +43,7 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
     }
 
     override fun onBackPressed() {
-        drawer_layout?.let { if (it.isDrawerOpen(GravityCompat.START)) it.closeDrawer(GravityCompat.START) }
+        drawer_layout.let { if (it.isDrawerOpen(GravityCompat.START)) it.closeDrawer(GravityCompat.START) }
 
         if (!isBackEnabled()) {
             showAlert {

@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.example.parth.kotlinpractice_2.R
 import com.example.parth.kotlinpractice_2.databinding.ActivityMainBinding
 import com.example.parth.kotlinpractice_2.kotlin.setUpBottomNavigation
+import com.example.parth.kotlinpractice_2.kotlin.setUpNavigationDrawer
 import com.example.parth.kotlinpractice_2.support.CoreActivity
 
 class MainActivity : CoreActivity<MainActivity, ActivityMainBinding, MainViewModel>() {
@@ -34,24 +35,12 @@ class MainActivity : CoreActivity<MainActivity, ActivityMainBinding, MainViewMod
 
     override fun getActionBarTitle(): String = getString(R.string.main_activity_title)
 
-//    override fun hasNavigationDrawer(): Boolean = true
-//
-//    override fun setNavigationDrawerMenu(navigationView: NavigationView) {
-//        navigationView.inflateMenu(R.menu.activity_drawer_drawer)
-//    }
-//
-//    override fun setNavigationDrawerHeader(navigationView: NavigationView) {
-//        val headerView: View = navigationView.inflateHeaderView(R.layout.nav_header_drawer)
-//        val navHeaderBinding = DataBindingUtil.bind<NavHeaderDrawerBinding>(headerView)
-//        navHeaderBinding?.vm = viewModel
-//    }
-
-//    override fun navigationDrawer() {
-//        setUpNavigationDrawer(viewModel) {
-//            setNavigationDrawerMenu(R.menu.activity_drawer_drawer)
-//            setNavigationDrawerHeader(R.layout.nav_header_drawer)
-//        }
-//    }
+    override fun navigationDrawer() {
+        setUpNavigationDrawer(viewModel) {
+            setNavigationDrawerMenu(R.menu.activity_drawer_drawer)
+            setNavigationDrawerHeader(R.layout.nav_header_drawer)
+        }
+    }
 
     override fun bottomNavigation() {
         setUpBottomNavigation {

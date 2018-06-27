@@ -1,26 +1,28 @@
 package com.example.parth.kotlinpractice_2.support
 
+import android.databinding.DataBindingUtil
+import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-abstract class CoreFragment<T : CoreFragment<T, VM>, VM : FragmentViewModel> : BaseFragment() {
+abstract class CoreFragment_DataBinding<T : CoreFragment_DataBinding<T, DB, VM>, DB : ViewDataBinding, VM : FragmentViewModel> : BaseFragment() {
 
     lateinit var coreFragment: T
+    lateinit var binding: DB
     var vm: VM? = null
-    lateinit var rootView: View
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return getRoot(inflater, container)
+        return getRoot()
     }
 
-    fun getRoot(inflater: LayoutInflater, container: ViewGroup?): View {
+    fun getRoot(): View {
         coreFragment = getFragmentContext()
-        rootView = inflater.inflate(getLayoutView(), container, false)
-        getViewModel()
+        binding = DataBindingUtil.inflate(layoutInflater, getLayoutView(), null, false)
+        setVM(binding)
         workArea()
-        return rootView
+        return binding.root
     }
 
     abstract fun workArea()
@@ -35,4 +37,6 @@ abstract class CoreFragment<T : CoreFragment<T, VM>, VM : FragmentViewModel> : B
     }
 
     abstract fun createViewModel(): VM
+
+    abstract fun setVM(binding: DB)
 }

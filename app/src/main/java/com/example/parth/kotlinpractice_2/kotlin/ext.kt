@@ -13,7 +13,7 @@ fun Context.showAlert(alertDialog: AlertDialogBuilder.() -> Unit) = AlertDialogB
 fun CoreActivity<*, *, *>.launchFragment(
         title: String = "title",
         addToBackStack: Boolean = false,
-        fragment: CoreFragment<*, *>,
+        fragment: BaseFragment,
         containerId: Int
 ) {
     getSupportFragmentManager().beginTransaction().apply {
@@ -27,7 +27,7 @@ fun CoreActivity<*, *, *>.launchFragment(
 }
 
 fun CoreActivity<*, *, *>.startFragment(
-        fragment: CoreFragment<*, *>,
+        fragment: BaseFragment,
         title: String = "title",
         addToBackStack: Boolean = false,
         containerId: Int = R.id.box_home_layout

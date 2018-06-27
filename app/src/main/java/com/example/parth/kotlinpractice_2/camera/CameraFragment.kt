@@ -4,13 +4,13 @@ package com.example.parth.kotlinpractice_2.camera
 import android.support.v4.app.Fragment
 import com.example.parth.kotlinpractice_2.R
 import com.example.parth.kotlinpractice_2.databinding.FragmentCameraBinding
-import com.example.parth.kotlinpractice_2.support.CoreFragment
+import com.example.parth.kotlinpractice_2.support.CoreFragment_DataBinding
 
 /**
  * A simple [Fragment] subclass.
  *
  */
-class CameraFragment : CoreFragment<CameraFragment, FragmentCameraBinding, CameraViewModel>() {
+class CameraFragment : CoreFragment_DataBinding<CameraFragment, FragmentCameraBinding, CameraViewModel>() {
 
     override fun getFragmentContext(): CameraFragment = this
 
@@ -21,5 +21,9 @@ class CameraFragment : CoreFragment<CameraFragment, FragmentCameraBinding, Camer
     }
 
     override fun createViewModel(): CameraViewModel = CameraViewModel()
+
+    override fun workArea() {
+        vm?.changeText()
+    }
 
 }
