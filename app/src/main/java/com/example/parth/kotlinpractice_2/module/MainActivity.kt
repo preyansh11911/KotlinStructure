@@ -39,6 +39,11 @@ class MainActivity : CoreActivity<MainActivity, ActivityMainBinding, MainViewMod
         setUpNavigationDrawer(viewModel) {
             setNavigationDrawerMenu(R.menu.activity_drawer_drawer)
             setNavigationDrawerHeader(R.layout.nav_header_drawer)
+            itemSelectedHandler { viewModel, navigationView ->
+                navigationView.setNavigationItemSelectedListener {
+                    viewModel.navigationDrawerClickHandler(it)
+                }
+            }
         }
     }
 

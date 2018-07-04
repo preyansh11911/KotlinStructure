@@ -41,6 +41,30 @@ class MainViewModel(val coreActivity: MainActivity) : ActivityViewModel(coreActi
                 return true
             }
         }
-        return false
+        return true
+    }
+
+    fun navigationDrawerClickHandler(menuItem: MenuItem): Boolean {
+        when (menuItem.itemId) {
+            R.id.nav_camera -> {
+                coreActivity.startFragment(CameraFragment(), title = "Camera Fragment")
+                return true
+            }
+            R.id.nav_gallery -> {
+                coreActivity.startFragment(GalleryFragment(), title = "Gallery Fragment")
+                return true
+            }
+            R.id.nav_manage -> {
+                coreActivity.startFragment(ToolsFragment(), title = "Tools Fragment")
+                return true
+            }
+            R.id.nav_slideshow -> {
+                coreActivity.startFragment(SlideshowFragment(), title = "Slideshow Fragment")
+                return true
+            }
+        }
+
+        coreActivity.onBackPressed()
+        return true
     }
 }

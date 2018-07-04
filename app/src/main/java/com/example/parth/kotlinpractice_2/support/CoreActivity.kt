@@ -10,10 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.example.parth.kotlinpractice_2.R
-import com.example.parth.kotlinpractice_2.R.id.*
 import com.example.parth.kotlinpractice_2.databinding.ActivityCoreBinding
 import com.example.parth.kotlinpractice_2.databinding.ActivityDrawerBinding
 import com.example.parth.kotlinpractice_2.kotlin.showAlert
+import kotlinx.android.synthetic.main.activity_drawer.*
+import kotlinx.android.synthetic.main.app_bar_drawer.*
+import kotlinx.android.synthetic.main.tool_bar.*
 
 
 abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, VM : ActivityViewModel> : AppCompatActivity() {
@@ -43,7 +45,12 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
     }
 
     override fun onBackPressed() {
-        drawer_layout.let { if (it.isDrawerOpen(GravityCompat.START)) it.closeDrawer(GravityCompat.START) }
+        drawer_layout?.let {
+            if (it.isDrawerOpen(GravityCompat.START)) {
+                it.closeDrawer(GravityCompat.START)
+                return
+            }
+        }
 
         if (!isBackEnabled()) {
             showAlert {
@@ -115,8 +122,6 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
         activity.title = getActionBarTitle()
         setNavigationDrawerContentView(layoutRes)
         setVM(binding)
-//        setNavigationDrawerMenu(nav_view)
-//        setNavigationDrawerHeader(nav_view)
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar_navigation_drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
@@ -125,6 +130,10 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
 
     private fun setNavDrawerVM() {
         navigationDrawerBinding.vm = coreViewModel
+    }
+
+    fun closeDrawer() {
+        drawer_layout.closeDrawer(GravityCompat.START)
     }
 
     private fun setActionBar() {

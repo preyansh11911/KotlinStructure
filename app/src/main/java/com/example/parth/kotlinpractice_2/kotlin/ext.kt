@@ -63,4 +63,4 @@ enum class Duration {
 }
 
 fun CoreActivity<*, *, *>.setUpBottomNavigation(builder: BottomNavigationBuilder.() -> Unit) = BottomNavigationBuilder(this).apply(builder)
-fun CoreActivity<*, *, *>.setUpNavigationDrawer(viewModel: ActivityViewModel, builder: NavigationDrawerBuilder.() -> Unit) = NavigationDrawerBuilder(this, viewModel).apply(builder)
+fun <T : ActivityViewModel> CoreActivity<*, *, *>.setUpNavigationDrawer(viewModel: T, builder: NavigationDrawerBuilder<T>.() -> Unit) = NavigationDrawerBuilder<T>(this, viewModel).apply(builder)

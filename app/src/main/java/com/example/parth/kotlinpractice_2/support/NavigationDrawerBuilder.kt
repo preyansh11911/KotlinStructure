@@ -6,7 +6,7 @@ import android.view.View
 import com.example.parth.kotlinpractice_2.databinding.NavHeaderDrawerBinding
 import kotlinx.android.synthetic.main.activity_drawer.*
 
-class NavigationDrawerBuilder(val coreActivity: CoreActivity<*, *, *>, val viewModel: ActivityViewModel) {
+class NavigationDrawerBuilder<T : ActivityViewModel>(val coreActivity: CoreActivity<*, *, *>, val viewModel: T) {
 
     val navigationView: NavigationView
 
@@ -24,5 +24,9 @@ class NavigationDrawerBuilder(val coreActivity: CoreActivity<*, *, *>, val viewM
         val headerView: View = navigationView.inflateHeaderView(layoutRes)
         val navHeaderBinding = DataBindingUtil.bind<NavHeaderDrawerBinding>(headerView)
         navHeaderBinding?.vm = viewModel
+    }
+
+    fun itemSelectedHandler(navigation: (T, NavigationView) -> Unit) {
+        navigation(viewModel, navigationView)
     }
 }
