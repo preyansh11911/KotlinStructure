@@ -6,9 +6,9 @@ import android.view.View
 import com.example.parth.kotlinpractice_2.R
 import com.example.parth.kotlinpractice_2.camera.CameraFragment
 import com.example.parth.kotlinpractice_2.gallery.GalleryFragment
-import com.example.parth.kotlinpractice_2.kotlin.startFragment
 import com.example.parth.kotlinpractice_2.slideshow.SlideshowFragment
 import com.example.parth.kotlinpractice_2.support.ActivityViewModel
+import com.example.parth.kotlinpractice_2.support.kotlin.startFragment
 import com.example.parth.kotlinpractice_2.tools.ToolsFragment
 
 class MainViewModel(val coreActivity: MainActivity) : ActivityViewModel(coreActivity) {

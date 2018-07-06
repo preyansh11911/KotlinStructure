@@ -5,9 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import com.example.parth.kotlinpractice_2.R
 import com.example.parth.kotlinpractice_2.databinding.ActivityMainBinding
-import com.example.parth.kotlinpractice_2.kotlin.setUpBottomNavigation
-import com.example.parth.kotlinpractice_2.kotlin.setUpNavigationDrawer
 import com.example.parth.kotlinpractice_2.support.CoreActivity
+import com.example.parth.kotlinpractice_2.support.kotlin.setUpBottomNavigation
+import com.example.parth.kotlinpractice_2.support.kotlin.setUpNavigationDrawer
 
 class MainActivity : CoreActivity<MainActivity, ActivityMainBinding, MainViewModel>() {
 
@@ -34,6 +34,10 @@ class MainActivity : CoreActivity<MainActivity, ActivityMainBinding, MainViewMod
     override fun createViewModel(activity: MainActivity): MainViewModel = MainViewModel(activity)
 
     override fun getActionBarTitle(): String = getString(R.string.main_activity_title)
+
+    override fun isCustomActionbar(): Boolean {
+        return true
+    }
 
     override fun navigationDrawer() {
         setUpNavigationDrawer(viewModel) {

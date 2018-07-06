@@ -1,11 +1,10 @@
-package com.example.parth.kotlinpractice_2.kotlin
+package com.example.parth.kotlinpractice_2.support.kotlin
 
 import android.content.Context
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.View
 import android.widget.Toast
-import com.example.parth.kotlinpractice_2.R
 import com.example.parth.kotlinpractice_2.support.*
 
 fun Context.showAlert(alertDialog: AlertDialogBuilder.() -> Unit) = AlertDialogBuilder(this).apply(alertDialog)
@@ -30,7 +29,7 @@ fun CoreActivity<*, *, *>.startFragment(
         fragment: BaseFragment,
         title: String = "title",
         addToBackStack: Boolean = false,
-        containerId: Int = R.id.box_home_layout
+        containerId: Int = 0
 ) {
 
     fragment.newInstance().let {
@@ -57,6 +56,12 @@ fun Context.toast(msg: String, duration: Duration) {
 fun View.snack(msg: String) {
     Snackbar.make(this, msg, Snackbar.LENGTH_SHORT)
 }
+
+//fun View.snackWithAction(msg: String) {
+//    val snackBar = Snackbar.make(this,msg, Snackbar.LENGTH_INDEFINITE)
+//    snackBar.setAction(R.string.OK)
+//
+//}
 
 enum class Duration {
     SHORT, LONG, INDEFINITE

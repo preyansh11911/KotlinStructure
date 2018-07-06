@@ -5,21 +5,23 @@ import android.databinding.ViewDataBinding
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import com.example.parth.kotlinpractice_2.R
-import com.example.parth.kotlinpractice_2.databinding.ActivityCoreBinding
-import com.example.parth.kotlinpractice_2.databinding.ActivityDrawerBinding
 import com.example.parth.kotlinpractice_2.support.kotlin.showAlert
+import com.support.R
+import com.support.databinding.ActivityCoreBinding
+import com.support.databinding.ActivityDrawerBinding
 import kotlinx.android.synthetic.main.activity_drawer.*
 import kotlinx.android.synthetic.main.app_bar_drawer.*
-import kotlinx.android.synthetic.main.tool_bar.*
 
 
 abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, VM : ActivityViewModel> : AppCompatActivity() {
 
+    val TAG = "CoreActivity"
     lateinit var activity: T
     var layoutRes: Int = 0
     lateinit var coreBinding: ActivityCoreBinding
@@ -85,19 +87,8 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
         this.activity = activity
         this.layoutRes = layoutRes
         navigationDrawer()
-//        if (hasNavigationDrawer) {
-//            setNavigationDrawer()
-//            if (hasBottomNavigation()) {
-//                coreViewModel.hasBottom_DrawerNav.set(true)
-//                setBottomNavDrawerMenu(bottom_navigation_nav_drawer)
-//            }
-//        }
         if (!hasNavigationDrawer) {
             setActionBar()
-//            if (hasBottomNavigation()) {
-//                coreViewModel.hasBottomNavigation.set(true)
-//                setBottomNavDrawerMenu(bottom_navigation)
-//            }
         }
         bottomNavigation()
         workArea(viewModel)
@@ -142,7 +133,13 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
                 removeActionBar()
                 setBindings(layoutRes)
                 setCustomActionBarProperties(isCustomActionbar(), getActionBarTitle(), isBackEnabled())
-                activity.setSupportActionBar(tool_bar_box)
+                try {
+                    activity.setSupportActionBar(getToolBarID())
+                } catch (e: NullPointerException) {
+                    Log.e(TAG, e.localizedMessage)
+                    Log.e(TAG, "Please call getToolBarID() in activity.")
+
+                }
             } else {
                 setBindings(layoutRes)
                 setDefaultActionBarProperties(getActionBarTitle(), isBackEnabled())
@@ -203,6 +200,10 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
 
     open fun isBackEnabled(): Boolean {
         return false
+    }
+
+    open fun getToolBarID(): Toolbar? {
+        return null
     }
 
     /**

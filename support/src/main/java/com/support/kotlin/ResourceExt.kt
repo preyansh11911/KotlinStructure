@@ -1,4 +1,4 @@
-package com.example.parth.kotlinpractice_2.kotlin
+package com.example.parth.kotlinpractice_2.support.kotlin
 
 import android.app.Activity
 import android.support.v4.content.ContextCompat

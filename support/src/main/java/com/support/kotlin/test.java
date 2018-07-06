@@ -1,4 +1,4 @@
-package com.example.parth.kotlinpractice_2.kotlin;
+package com.support.kotlin;
 
 public class test {
     public void showConfirmationDialog(T.OnClickListener listener) {
