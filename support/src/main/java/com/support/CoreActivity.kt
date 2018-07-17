@@ -6,7 +6,6 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +16,7 @@ import com.support.databinding.ActivityCoreBinding
 import com.support.databinding.ActivityDrawerBinding
 import kotlinx.android.synthetic.main.activity_drawer.*
 import kotlinx.android.synthetic.main.app_bar_drawer.*
+import kotlinx.android.synthetic.main.tool_bar.*
 
 
 abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, VM : ActivityViewModel> : AppCompatActivity() {
@@ -130,16 +130,7 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
     private fun setActionBar() {
         if (hasActionbar()) {
             if (isCustomActionbar()) {
-                removeActionBar()
-                setBindings(layoutRes)
-                setCustomActionBarProperties(isCustomActionbar(), getActionBarTitle(), isBackEnabled())
-                try {
-                    activity.setSupportActionBar(getToolBarID())
-                } catch (e: NullPointerException) {
-                    Log.e(TAG, e.localizedMessage)
-                    Log.e(TAG, "Please call getToolBarID() in activity.")
-
-                }
+                setCustomActionBar()
             } else {
                 setBindings(layoutRes)
                 setDefaultActionBarProperties(getActionBarTitle(), isBackEnabled())
@@ -148,6 +139,13 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
             removeActionBar()
             setBindings(layoutRes)
         }
+    }
+
+    private fun setCustomActionBar() {
+        removeActionBar()
+        setBindings(layoutRes)
+        setCustomActionBarProperties(isCustomActionbar(), getActionBarTitle(), isBackEnabled())
+        activity.setSupportActionBar(tool_bar_box)
     }
 
     private fun setDefaultActionBarProperties(actionBarTitle: String, isBackEnabled: Boolean) {

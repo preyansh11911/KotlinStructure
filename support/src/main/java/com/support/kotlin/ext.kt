@@ -1,11 +1,15 @@
 package com.example.parth.kotlinpractice_2.support.kotlin
 
 import android.content.Context
+import android.databinding.ViewDataBinding
+import android.support.annotation.LayoutRes
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Toast
 import com.example.parth.kotlinpractice_2.support.*
+import com.support.RecyclerViewBuilder
 
 fun Context.showAlert(alertDialog: AlertDialogBuilder.() -> Unit) = AlertDialogBuilder(this).apply(alertDialog)
 
@@ -69,3 +73,4 @@ enum class Duration {
 
 fun CoreActivity<*, *, *>.setUpBottomNavigation(builder: BottomNavigationBuilder.() -> Unit) = BottomNavigationBuilder(this).apply(builder)
 fun <T : ActivityViewModel> CoreActivity<*, *, *>.setUpNavigationDrawer(viewModel: T, builder: NavigationDrawerBuilder<T>.() -> Unit) = NavigationDrawerBuilder<T>(this, viewModel).apply(builder)
+fun <T, U : ViewDataBinding> RecyclerView.setUpRecyclerView(itemList: ArrayList<T>, @LayoutRes layout: Int, onBound: (T, U: ViewDataBinding) -> Unit) = RecyclerViewBuilder<T, U>(this, itemList, onBound).apply { itemView = layout }
