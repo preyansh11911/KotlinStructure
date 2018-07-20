@@ -57,7 +57,11 @@ class RecyclerViewBuilder<T: POJOModel, U: ViewDataBinding>
     }
 
     override fun getItemId(position: Int): Long {
-        return mItems[position]?.hashCode()?.toLong()!!
+        return mItems[position].hashCode().toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (mItems[position].isLoader) VIEW_TYPE_LOADER else VIEW_TYPE_ITEM
     }
 
     inner class MyContentViewHolder(val binding: U) : RecyclerView.ViewHolder(binding.root)
@@ -65,28 +69,39 @@ class RecyclerViewBuilder<T: POJOModel, U: ViewDataBinding>
 
     fun enableLoadMore(l: () -> Unit) {
         loadMoreListener = l
-        val totalItemCount = recyclerView.layoutManager.getItemCount()
-        val lastVisibleItem = (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-        val visibleThreshold = 5
-        if (!isLoading && totalItemCount <= lastVisibleItem + visibleThreshold) {
-            if (loadMoreListener != null) {
-                loadMoreListener?.invoke()
+
+        recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+                val totalItemCount = recyclerView?.layoutManager?.getItemCount()
+                val lastVisibleItem = (recyclerView?.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                val visibleThreshold = 5
+                if (!isLoading && totalItemCount!! <= (lastVisibleItem + visibleThreshold)) {
+                    if (loadMoreListener != null) {
+                        loadMoreListener?.invoke()
+                    }
+                    isLoading = true
+                }
             }
-            isLoading = true
-        }
+        })
     }
 
-//    private fun showLoader() {
-//        val pModel = object: POJOModel(){
-//            override var id: Long
-//                get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-//                set(value) {}
-//            override var isLoader: Boolean
-//                get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-//                set(value) {}
-//
-//        }
-//        mItems.add(object: POJOModel().isLoader = true)
-//    }
+    fun showLoader() {
+        val pModel = POJOModel().apply { isLoader = true } as T
+        mItems.add(pModel)
+        notifyItemInserted(itemCount - 1)
+    }
 
+    fun stopLoader() {
+        isLoading = false
+    }
+
+    fun removeLastItem() {
+        mItems.removeAt(itemCount - 1)
+        notifyItemRemoved(itemCount)
+    }
+
+    fun addAll(list: ArrayList<T>) {
+        val position = itemCount
+        notifyItemRangeInserted(position, list.size)
+    }
 }
