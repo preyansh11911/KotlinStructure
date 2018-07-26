@@ -1,42 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="vm"
-            type="com.example.parth.kotlin_practice_27.SampleModel"/>
+            type="com.example.parth.kotlin_practice_27.SampleModel" />
+
         <variable
             name="onItemClickListener"
-            type="android.view.View.OnClickListener"/>
+            type="android.view.View.OnClickListener" />
     </data>
+
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{onItemClickListener}"
-        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp">
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="@{onItemClickListener}">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="5dp">
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/txt_item"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text='@{"Name : "+vm.name}'
-                android:textSize="20sp"
-                android:textColor="@android:color/black"
-                tools:text="Sample text" />
+                android:layout_weight="2"
+                android:orientation="vertical"
+                android:padding="5dp">
 
-            <TextView
+                <TextView
+                    android:id="@+id/txt_item_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text='@{"Name : "+vm.name}'
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    tools:text="Sample text" />
+
+                <TextView
+                    android:id="@+id/txt_item_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='@{"Age : "+vm.age+" yrs"}'
+                    tools:text="Age 25 yrs" />
+            </LinearLayout>
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text='@{"Age : "+vm.age+" yrs"}'
-                tools:text="Age 25 yrs"/>
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@color/delete">
+                <ImageButton
+                    android:id="@+id/img_btn_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_delete" />
+            </RelativeLayout>
         </LinearLayout>
 
     </android.support.v7.widget.CardView>

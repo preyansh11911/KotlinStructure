@@ -23,7 +23,7 @@ class SampleAdapter(
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(sModel: SampleModel) {
-            itemView.txt_item.text = sModel.name
+            itemView.txt_item_name.text = sModel.name
         }
     }
 }

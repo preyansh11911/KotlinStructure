@@ -2,11 +2,13 @@ package com.example.parth.kotlin_practice_27
 
 import com.support.POJOModel
 
-data class SampleModel(var name: String, var age: Int) : POJOModel() {
-    override var id: Long = 0
-        get() = field
-        set(value) {field = value}
-    override var isLoader: Boolean = false
-        get() = field
-        set(value) {field = value}
+data class SampleModel(var name: String, var age: Int) : POJOModel(){
+    init {
+        SampleModel.id++
+        this.id=SampleModel.id
+        name+=this.id
+    }
+    companion object {
+        var id: Long = 0
+    }
 }

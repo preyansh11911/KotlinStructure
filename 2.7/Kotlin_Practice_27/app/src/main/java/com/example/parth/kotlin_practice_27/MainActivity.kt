@@ -8,6 +8,13 @@ import com.example.parth.kotlin_practice_27.databinding.ActivityMainBinding
 import com.example.parth.kotlinpractice_2.support.CoreActivity
 import com.support.kotlin.setUpNavigationDrawer
 import kotlinx.android.synthetic.main.activity_main.*
+import android.view.ViewAnimationUtils
+import android.animation.Animator
+import android.opengl.ETC1.getHeight
+import android.opengl.ETC1.getWidth
+import android.view.View
+import android.widget.Toast
+
 
 class MainActivity : CoreActivity<MainActivity,ActivityMainBinding,MainViewModel>() {
 
@@ -27,6 +34,8 @@ class MainActivity : CoreActivity<MainActivity,ActivityMainBinding,MainViewModel
     override fun workArea(viewModel: MainViewModel) {
 //        viewModel.createList()
     }
+
+    override fun isBackEnabled(): Boolean? = false
 
     companion object {
         fun getIntent(context: Context): Intent {
