@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.example.parth.kotlin_practice_28.RecyclerListViewModel" />
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            tools:context=".RecyclerListFragment">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Vertical Recycler View"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rec_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:clipToPadding="false"
+                android:paddingTop="10dp"
+                tools:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_row_main" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Horizontal Recycler View"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rec_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="8dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                tools:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_row_horizontal"
+                tools:orientation="horizontal" />
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginStart="8dp"-->
+                <!--android:text="Grid Recycler View"-->
+                <!--android:textColor="@android:color/black"-->
+                <!--android:textSize="20sp" />-->
+
+            <!--<android.support.v7.widget.RecyclerView-->
+                <!--android:id="@+id/rec_grid"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:clipToPadding="false"-->
+                <!--android:paddingBottom="8dp"-->
+                <!--android:paddingEnd="8dp"-->
+                <!--android:paddingStart="8dp"-->
+                <!--tools:itemCount="10"-->
+                <!--tools:layoutManager="android.support.v7.widget.GridLayoutManager"-->
+                <!--tools:listitem="@layout/item_row_horizontal"-->
+                <!--tools:orientation="horizontal"-->
+                <!--tools:scrollbars="horizontal"-->
+                <!--tools:spanCount="3"/>-->
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

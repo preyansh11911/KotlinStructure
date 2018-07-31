@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Kotlin_Practice_2.8</string>
+    <string name="preyansh_activity">Preyansh Activity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
