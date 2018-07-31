@@ -58,9 +58,7 @@ class MainActivity : CoreActivity<MainActivity, ActivityMainBinding, MainViewMod
             setItemColor(R.color.colorAccent, android.R.color.white)
             shiftModeEnabled(false)
             itemSelectedHandler {
-                it.setOnNavigationItemSelectedListener {
-                    viewModel.bottomNavigationClickHandler(it)
-                }
+                viewModel.bottomNavigationClickHandler(it)
             }
         }
     }

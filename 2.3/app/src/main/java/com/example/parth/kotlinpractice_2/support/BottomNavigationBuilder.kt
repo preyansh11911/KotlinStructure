@@ -6,6 +6,7 @@ import android.support.design.internal.BottomNavigationItemView
 import android.support.design.internal.BottomNavigationMenuView
 import android.support.design.widget.BottomNavigationView
 import android.util.Log
+import android.view.MenuItem
 import com.example.parth.kotlinpractice_2.support.kotlin.getColor
 import kotlinx.android.synthetic.main.activity_core.*
 import kotlinx.android.synthetic.main.content_drawer.*
@@ -103,8 +104,12 @@ class BottomNavigationBuilder(val coreActivity: CoreActivity<*, *, *>) {
         }
     }
 
-    fun itemSelectedHandler(navigation: (BottomNavigationView) -> Unit) {
-        navigation(view)
+    fun itemSelectedHandler(navigation: (MenuItem) -> Unit) {
+        view.setOnNavigationItemSelectedListener {
+            navigation(it)
+            true
+        }
+//        navigation(view)
     }
 }
 
