@@ -28,38 +28,38 @@ class MainActivity : CoreActivity<MainActivity, ActivityMainBinding, MainViewMod
     }
 
     override fun workArea(viewModel: MainViewModel) {
-        viewModel.launchCameraFrag()
+//        viewModel.launchCameraFrag()
     }
 
     override fun createViewModel(activity: MainActivity): MainViewModel = MainViewModel(activity)
 
-    override fun getActionBarTitle(): String = getString(R.string.main_activity_title)
+    override fun getActionBarTitle(): String = /*getString(R.string.main_activity_title)*/"Test"
 
     override fun isCustomActionbar(): Boolean {
         return true
     }
 
-    override fun navigationDrawer() {
-        setUpNavigationDrawer(viewModel) {
-            setNavigationDrawerMenu(R.menu.activity_drawer_drawer)
-            setNavigationDrawerHeader(R.layout.nav_header_drawer)
-            itemSelectedHandler { viewModel, navigationView ->
-                navigationView.setNavigationItemSelectedListener {
-                    viewModel.navigationDrawerClickHandler(it)
-                }
-            }
-        }
-    }
+//    override fun navigationDrawer() {
+//        setUpNavigationDrawer(viewModel) {
+//            setNavigationDrawerMenu(R.menu.activity_drawer_drawer)
+//            setNavigationDrawerHeader(R.layout.nav_header_drawer)
+//            itemSelectedHandler { viewModel, navigationView ->
+//                navigationView.setNavigationItemSelectedListener {
+//                    viewModel.navigationDrawerClickHandler(it)
+//                }
+//            }
+//        }
+//    }
 
-    override fun bottomNavigation() {
-        setUpBottomNavigation {
-            setMenu(R.menu.bottom_navigation)
-            setBackgroundColor(R.drawable.bottom_navigation_background_color)
-            setItemColor(R.color.colorAccent, android.R.color.white)
-            shiftModeEnabled(false)
-            itemSelectedHandler {
-                viewModel.bottomNavigationClickHandler(it)
-            }
-        }
-    }
+//    override fun bottomNavigation() {
+//        setUpBottomNavigation {
+//            setMenu(R.menu.bottom_navigation)
+//            setBackgroundColor(R.drawable.bottom_navigation_background_color)
+//            setItemColor(R.color.colorAccent, android.R.color.white)
+//            shiftModeEnabled(false)
+//            itemSelectedHandler {
+//                viewModel.bottomNavigationClickHandler(it)
+//            }
+//        }
+//    }
 }
