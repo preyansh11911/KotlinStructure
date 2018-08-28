@@ -3,6 +3,10 @@ package com.example.parth.commenthierarchydemo.comments_module
 import android.view.View
 import android.widget.Toast
 import com.bignerdranch.expandablerecyclerview.ParentViewHolder
+import com.example.parth.commenthierarchydemo.MainActivity
+import com.example.parth.commenthierarchydemo.MainViewModel
+import com.support.kotlin.showSoftKeyboard
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.parent_single_item.view.*
 
 class CommentViewHolder(itemView: View) : ParentViewHolder<Comment, Reply>(itemView) {
@@ -12,11 +16,16 @@ class CommentViewHolder(itemView: View) : ParentViewHolder<Comment, Reply>(itemV
     val txtReply = itemView.txt_cmnt_reply
     val txtViewReply = itemView.txt_cmnt_view_replies
 
-    fun bind(comment: Comment) {
+    fun bind(activity: MainActivity, comment: Comment) {
         txtName.text = comment.name
         txtComment.text = comment.cmntMsg
         txtLike.setOnClickListener { Toast.makeText(itemView.context, "You liked this comment.", Toast.LENGTH_SHORT).show() }
-        txtReply.setOnClickListener { Toast.makeText(itemView.context, "Work In Progress", Toast.LENGTH_SHORT).show() }
+        txtReply.setOnClickListener {
+            activity.ed_comment.requestFocus()
+            activity.showSoftKeyboard()
+            activity.type = MainViewModel.Type.REPLY
+            activity.itemPosition = adapterPosition
+        }
         if (comment.replyList!!.isEmpty()) txtViewReply.visibility = View.GONE else txtViewReply.visibility = View.VISIBLE
         txtViewReply.setOnClickListener {
             if (isExpanded) {
@@ -29,4 +38,6 @@ class CommentViewHolder(itemView: View) : ParentViewHolder<Comment, Reply>(itemV
             }
         }
     }
+
+    override fun shouldItemViewClickToggleExpansion() = false
 }

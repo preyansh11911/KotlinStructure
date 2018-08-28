@@ -2,48 +2,77 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="vm"
-            type="com.example.parth.commenthierarchydemo.MainViewModel"/>
+            type="com.example.parth.commenthierarchydemo.MainViewModel" />
     </data>
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
         tools:context=".MainActivity">
+
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/ll_comment_box"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/rounded_grey_layout"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageButton
+                android:id="@+id/img_btn_send"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:elevation="5dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/send_btn"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <EditText
+                android:id="@+id/ed_comment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_toStartOf="@id/img_btn_send"
+                android:background="@color/grey"
+                android:hint="Enter your comment here..."
+                android:maxLines="5"
+                android:padding="5dp"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/img_btn_send"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+        <View
+            android:id="@+id/view_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/grey"
+            app:layout_constraintBottom_toTopOf="@+id/ll_comment_box" />
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rec_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <EditText
-            android:id="@+id/ed_comment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="3"
-            android:inputType="text"
-            android:background="@drawable/rounded_grey_layout"
-            android:padding="5dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="10dp"
-            android:hint="Enter your comment here..."
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <ImageButton
-            android:id="@+id/img_btn_send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_send"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/grey"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/ed_comment"
-            />
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/view_divider"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

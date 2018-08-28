@@ -1,14 +1,15 @@
 package com.example.parth.commenthierarchydemo.comments_module
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bignerdranch.expandablerecyclerview.ExpandableRecyclerAdapter
+import com.example.parth.commenthierarchydemo.MainActivity
 import com.example.parth.commenthierarchydemo.R
+import kotlinx.android.synthetic.main.activity_main.*
 
-class CommentListAdapter(context: Context, commentList: MutableList<Comment>) : ExpandableRecyclerAdapter<Comment,Reply,CommentViewHolder, ReplyViewHolder>(commentList) {
+class CommentListAdapter(val activity: MainActivity, val commentList: ArrayList<Comment>) : ExpandableRecyclerAdapter<Comment, Reply, CommentViewHolder, ReplyViewHolder>(commentList) {
 
-    val mInflater = LayoutInflater.from(context)
+    val mInflater = LayoutInflater.from(activity)
 
     override fun onCreateParentViewHolder(parentViewGroup: ViewGroup, viewType: Int): CommentViewHolder {
         val commentView = mInflater.inflate(R.layout.parent_single_item, parentViewGroup, false)
@@ -21,10 +22,26 @@ class CommentListAdapter(context: Context, commentList: MutableList<Comment>) : 
     }
 
     override fun onBindParentViewHolder(commentHolder: CommentViewHolder, parentPosition: Int, comment: Comment) {
-        commentHolder.bind(comment)
+        commentHolder.bind(activity, comment)
     }
 
     override fun onBindChildViewHolder(replyHolder: ReplyViewHolder, parentPosition: Int, childPosition: Int, reply: Reply) {
         replyHolder.bind(reply)
+    }
+
+    fun addItem(comment: Comment) {
+        commentList.add(comment)
+        notifyParentDataSetChanged(false)
+    }
+
+    fun addItem(reply: String, position: Int) {
+        val comment = commentList[position]
+        comment.replyList?.add(Reply("Reply : " + comment.replyList?.size, reply))
+        notifyParentDataSetChanged(false)
+        expandParent(position)
+    }
+
+    fun scroll() {
+        activity.rec_view.scrollToPosition(commentList.size - 1)
     }
 }

@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.example.parth.kotlinpractice_2.support.*
 import com.support.POJOModel
@@ -65,6 +66,19 @@ fun Context.toast(msg: String, duration: Duration) {
 
 fun View.snack(msg: String) {
     Snackbar.make(this, msg, Snackbar.LENGTH_SHORT)
+}
+
+fun Activity.hideSoftKeyboard() {
+    val imm = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    var view = this.currentFocus
+    if (view == null)
+        view = View(this)
+    imm.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+fun Activity.showSoftKeyboard() {
+    val imm = this.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
 }
 
 //fun View.snackWithAction(msg: String) {
