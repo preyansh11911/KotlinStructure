@@ -14,7 +14,9 @@ class CommentViewHolder(itemView: View) : ParentViewHolder<Comment, Reply>(itemV
     val txtComment = itemView.txt_cmnt
     val txtLike = itemView.txt_cmnt_like
     val txtReply = itemView.txt_cmnt_reply
-    val txtViewReply = itemView.txt_cmnt_view_replies
+    val llReplyBox = itemView.ll_cmnt_rpl_box
+    val txtCommentReplyName = itemView.txt_cmnt_rpl_name
+    val txtCommentReplyMessage = itemView.txt_cmnt_rpl_msg
 
     fun bind(activity: MainActivity, comment: Comment) {
         txtName.text = comment.name
@@ -26,15 +28,18 @@ class CommentViewHolder(itemView: View) : ParentViewHolder<Comment, Reply>(itemV
             activity.type = MainViewModel.Type.REPLY
             activity.itemPosition = adapterPosition
         }
-        if (comment.replyList!!.isEmpty()) txtViewReply.visibility = View.GONE else txtViewReply.visibility = View.VISIBLE
-        txtViewReply.setOnClickListener {
-            if (isExpanded) {
-                txtViewReply.text = "View replies"
-                collapseView()
+        if (comment.replyList!!.isEmpty()) llReplyBox.visibility = View.GONE
+        else {
+            if (!isExpanded) {
+                llReplyBox.visibility = View.VISIBLE
+                txtCommentReplyName.text = comment.replyList!![0].name
+                txtCommentReplyMessage.text = comment.replyList!![0].rplMsg
             }
-            else {
-                txtViewReply.text = "Hide replies"
+        }
+        llReplyBox.setOnClickListener {
+            if (!isExpanded) {
                 expandView()
+                llReplyBox.visibility = View.GONE
             }
         }
     }

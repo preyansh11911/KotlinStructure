@@ -17,7 +17,7 @@ class CommentListAdapter(val activity: MainActivity, val commentList: ArrayList<
     }
 
     override fun onCreateChildViewHolder(childViewGroup: ViewGroup, viewType: Int): ReplyViewHolder {
-        val replyView = mInflater.inflate(R.layout.child_single_item,childViewGroup,false)
+        val replyView = mInflater.inflate(R.layout.child_single_item, childViewGroup, false)
         return ReplyViewHolder(replyView)
     }
 
@@ -26,19 +26,21 @@ class CommentListAdapter(val activity: MainActivity, val commentList: ArrayList<
     }
 
     override fun onBindChildViewHolder(replyHolder: ReplyViewHolder, parentPosition: Int, childPosition: Int, reply: Reply) {
-        replyHolder.bind(reply)
+        replyHolder.bind(activity, reply)
     }
 
     fun addItem(comment: Comment) {
         commentList.add(comment)
-        notifyParentDataSetChanged(false)
+        notifyParentInserted(commentList.size - 1)
     }
 
     fun addItem(reply: String, position: Int) {
         val comment = commentList[position]
         comment.replyList?.add(Reply("Reply : " + comment.replyList?.size, reply))
-        notifyParentDataSetChanged(false)
-        expandParent(position)
+        if (comment.replyList!!.size == 1)
+            notifyParentDataSetChanged(true)
+        else
+            notifyChildInserted(position, comment.replyList!!.size - 1)
     }
 
     fun scroll() {

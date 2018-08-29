@@ -1,66 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:padding="8dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_rpl_user"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginStart="58dp"
-        android:src="@drawable/sample"/>
+        android:layout_marginStart="32dp"
+        android:src="@drawable/sample" />
 
-    <LinearLayout
-        android:id="@+id/ll_rpl_container"
+    <TextView
+        android:id="@+id/txt_rpl_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_alignBottom="@+id/img_rpl_user"
+        android:layout_alignTop="@+id/img_rpl_user"
         android:layout_marginStart="8dp"
-        android:padding="12dp"
-        android:background="@drawable/rounded_grey_layout"
-        android:layout_toEndOf="@id/img_rpl_user">
-        <TextView
-            android:id="@+id/txt_rpl_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            tools:text="Preyansh Brahmbhatt Preyansh Brahmbhatt Preyansh Brahmbhatt Preyansh Brahmbhatt Preyansh Brahmbhatt Preyansh Brahmbhatt Preyansh Brahmbhatt Preyansh Brahmbhatt "/>
+        android:layout_toEndOf="@+id/img_rpl_user"
+        android:gravity="center_vertical"
+        android:maxLines="2"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        tools:text="Preyansh Brahmbhatt Preyansh Brahmbhatt Preyansh Brahmbhatt Preyansh Brahmbhatt Preyansh Brahmbhatt Preyansh Brahmbhatt Preyansh Brahmbhatt Preyansh Brahmbhatt " />
 
-        <TextView
-            android:id="@+id/txt_rpl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            tools:text="Hey bro this is amazing. Hey bro this is amazing. Hey bro this is amazing. Hey bro this is amazing. Hey bro this is amazing. Hey bro this is amazing. " />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/txt_rpl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/img_rpl_user"
+        android:layout_below="@+id/img_rpl_user"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@android:color/black"
+        tools:text="Hey bro this is amazing. Hey bro this is amazing. Hey bro this is amazing. Hey bro this is amazing. Hey bro this is amazing. Hey bro this is amazing. " />
 
     <TextView
         android:id="@+id/txt_rpl_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Like"
-        android:textStyle="bold"
-        android:layout_marginStart="12dp"
-        android:textSize="12sp"
-        android:padding="2dp"
+        android:layout_alignStart="@id/txt_rpl"
+        android:layout_below="@id/txt_rpl"
         android:layout_marginTop="4dp"
-        android:layout_below="@id/ll_rpl_container"
-        android:layout_alignStart="@id/ll_rpl_container"/>
+        android:padding="2dp"
+        android:text="Like"
+        android:textSize="12sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/txt_rpl_reply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reply"
-        android:textStyle="bold"
+        android:layout_below="@id/txt_rpl"
         android:layout_marginStart="12dp"
-        android:textSize="12sp"
-        android:padding="2dp"
         android:layout_marginTop="4dp"
-        android:layout_below="@id/ll_rpl_container"
-        android:layout_toEndOf="@id/txt_rpl_like"/>
+        android:layout_toEndOf="@id/txt_rpl_like"
+        android:padding="2dp"
+        android:text="Reply"
+        android:textSize="12sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
