@@ -16,47 +16,35 @@
         android:focusableInTouchMode="true"
         tools:context=".MainActivity">
 
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/ll_comment_box"
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/ed_comment"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:layout_toStartOf="@id/img_btn_send"
             android:background="@drawable/rounded_grey_layout"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            app:layout_constraintBottom_toBottomOf="parent">
+            android:hint="Enter your comment here..."
+            android:inputType="none"
+            android:maxLines="5"
+            android:minHeight="40dp"
+            android:padding="10dp"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/img_btn_send"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf " />
 
-            <ImageButton
-                android:id="@+id/img_btn_send"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentEnd="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:elevation="5dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/send_btn"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <EditText
-                android:id="@+id/ed_comment"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:layout_toStartOf="@id/img_btn_send"
-                android:background="@color/grey"
-                android:hint="Enter your comment here..."
-                android:maxLines="5"
-                android:padding="5dp"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/img_btn_send"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-        </android.support.constraint.ConstraintLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/img_btn_send"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_send"
+            app:layout_constraintBottom_toBottomOf="@+id/ed_comment"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ed_comment"
+            app:layout_constraintVertical_bias="1.0" />
 
         <View
             android:id="@+id/view_divider"
@@ -64,7 +52,7 @@
             android:layout_height="1dp"
             android:layout_marginBottom="5dp"
             android:background="@color/darkGrey"
-            app:layout_constraintBottom_toTopOf="@+id/ll_comment_box" />
+            app:layout_constraintBottom_toTopOf="@+id/ed_comment" />
 
 
         <android.support.v7.widget.RecyclerView

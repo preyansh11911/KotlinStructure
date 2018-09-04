@@ -39,4 +39,5 @@ dependencies {
     implementation project(':support')
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.bignerdranch.android:expandablerecyclerview:3.0.0-RC1'
+    implementation 'com.google.code.gson:gson:2.8.5'
 }

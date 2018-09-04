@@ -25,19 +25,15 @@ class RecyclerViewBuilder<T : POJOModel>
 
     private val VIEW_TYPE_ITEM = 1012
     private val VIEW_TYPE_LOADER = 1022
-
     var itemView: Int = 0
-
     var spanCount: (() -> Int)? = { 1 }
         set(value) {
             (recyclerView.layoutManager as GridLayoutManager).spanCount = value!!.invoke()
         }
-
-    var isNestedScrollingEnabled: (()-> Boolean) = { false }
-    set(value) {
-        recyclerView.isNestedScrollingEnabled = value.invoke()
-    }
-
+    var isNestedScrollingEnabled: (() -> Boolean) = { false }
+        set(value) {
+            recyclerView.isNestedScrollingEnabled = value.invoke()
+        }
     var contentBindingListener: ((T, View) -> Unit)? = null
     private lateinit var loadMoreListener: () -> Unit
     private var isLoading: Boolean = false
@@ -75,11 +71,6 @@ class RecyclerViewBuilder<T : POJOModel>
         if (holder is RecyclerViewBuilder<*>.CustomViewHolder) {
             contentBindingListener?.invoke(mItems[position], holder.itemView)
         }
-    }
-
-    fun removeItem(item: T) {
-        mItems.remove(item)
-        notifyDataSetChanged()
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -125,5 +116,10 @@ class RecyclerViewBuilder<T : POJOModel>
         val position = itemCount
         mItems.addAll(position, list)
         notifyItemRangeInserted(position, list.size)
+    }
+
+    fun removeItem(item: T) {
+        mItems.remove(item)
+        notifyDataSetChanged()
     }
 }

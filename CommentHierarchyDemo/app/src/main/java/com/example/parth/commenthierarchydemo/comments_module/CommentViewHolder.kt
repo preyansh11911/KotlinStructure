@@ -26,7 +26,7 @@ class CommentViewHolder(itemView: View) : ParentViewHolder<Comment, Reply>(itemV
             activity.ed_comment.requestFocus()
             activity.showSoftKeyboard()
             activity.type = MainViewModel.Type.REPLY
-            activity.itemPosition = adapterPosition
+            activity.itemPosition = parentAdapterPosition
         }
         if (comment.replyList!!.isEmpty()) llReplyBox.visibility = View.GONE
         else {
