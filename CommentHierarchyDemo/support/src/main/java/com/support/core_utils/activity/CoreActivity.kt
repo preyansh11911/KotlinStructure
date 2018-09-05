@@ -14,6 +14,7 @@ import com.support.R
 import com.support.databinding.ActivityCoreBinding
 import com.support.databinding.ActivityDrawerBinding
 import com.support.kotlin.showAlert
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_drawer.*
 import kotlinx.android.synthetic.main.app_bar_drawer.*
 import kotlinx.android.synthetic.main.tool_bar.*
@@ -34,12 +35,21 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
             return vm!!
         }
     var coreVM: ActivityViewModel? = null
-    val coreViewModel: ActivityViewModel
         get() {
-            if (coreVM == null) coreVM = createCoreViewModel()
-            return coreVM!!
+            if (field == null) field = createCoreViewModel()
+            return field
         }
+    //    val coreViewModel: ActivityViewModel
+//        get() {
+//            if (coreVM == null) coreVM = createCoreViewModel()
+//            return coreVM!!
+//        }
     var hasNavigationDrawer: Boolean = false
+    var compositeDisposable: CompositeDisposable? = null
+        get() {
+            if (field == null) field = CompositeDisposable()
+            return field
+        }
 
     override fun setContentView(childView: View?) {
         val lp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
@@ -96,7 +106,7 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
 
     fun setActionBarTitle(title: String) {
         if (isCustomActionbar())
-            coreViewModel.actionBarTitle.set(title)
+            coreVM!!.actionBarTitle.set(title)
         else
             activity.title = title
     }
@@ -108,7 +118,7 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
         setContentView(navigationDrawerBinding.root)
         setCoreVM()
         setNavDrawerVM()
-        coreViewModel.hasNavigationDrawer.set(true)
+        coreVM!!.hasNavigationDrawer.set(true)
         activity.setSupportActionBar(toolbar_navigation_drawer)
         activity.title = getActionBarTitle()
         setNavigationDrawerContentView(layoutRes)
@@ -120,7 +130,7 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
     }
 
     private fun setNavDrawerVM() {
-        navigationDrawerBinding.vm = coreViewModel
+        navigationDrawerBinding.vm = coreVM!!
     }
 
     fun closeDrawer() {
@@ -156,9 +166,9 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
     }
 
     private fun setCustomActionBarProperties(isCustomActionBar: Boolean, actionBarTitle: String, isBackEnabled: Boolean?) {
-        coreViewModel.isCustomActionbar.set(isCustomActionBar)
+        coreVM!!.isCustomActionbar.set(isCustomActionBar)
         setActionBarTitle(actionBarTitle)
-        isBackEnabled?.let { coreViewModel.isBackEnabled.set(it) }
+        isBackEnabled?.let { coreVM!!.isBackEnabled.set(it) }
     }
 
     private fun removeActionBar() {
@@ -174,7 +184,7 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
     }
 
     private fun setCoreVM() {
-        coreBinding.vm = coreViewModel
+        coreBinding.vm = coreVM
     }
 
     private fun createCoreViewModel(): ActivityViewModel {
