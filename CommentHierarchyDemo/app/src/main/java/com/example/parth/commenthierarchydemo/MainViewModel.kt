@@ -47,4 +47,14 @@ class MainViewModel(val mActivity: MainActivity) : ActivityViewModel(mActivity) 
     }
 
     val sharedPref = activity.getSharedPreferences("Comment_Preferences", Context.MODE_PRIVATE)
+
+    /*fun callApi() {
+        mActivity.callApi(
+                sample,
+                {it.sampleWebService<Sample>()},
+                { apiNames ->  },
+                { apiNames ->  },
+                { apiNames ->  }
+        )
+    }*/
 }

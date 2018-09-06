@@ -19,14 +19,26 @@ fun <T : POJOModel, U : ViewDataBinding> RecyclerView.setUpWithBinding(
         @RecyclerViewLayoutManager.LayoutManager layoutManager: Int,
         @RecyclerViewLinearLayout.Orientation orientation: Int,
         builder: RecyclerViewBuilder_Binding<T, U>.() -> Unit
-) = RecyclerViewBuilder_Binding<T, U>(this, layoutResId, itemList, layoutManager, orientation).apply(builder)
+) = RecyclerViewBuilder_Binding<T, U>(
+        this,
+        layoutResId,
+        itemList,
+        layoutManager,
+        orientation
+).apply(builder)
 
 class RecyclerViewBuilder_Binding<T : POJOModel, U : ViewDataBinding>
 /**
  * @param - Recycler View
  * @param - LIst to bind with RecyclerView
  **/
-(val recyclerView: RecyclerView, val itemView: Int, val mItems: ArrayList<T>, @RecyclerViewLayoutManager.LayoutManager layoutManager: Int, @RecyclerViewLinearLayout.Orientation orientation: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+(
+        val recyclerView: RecyclerView,
+        val itemView: Int,
+        val mItems: ArrayList<T>,
+        @RecyclerViewLayoutManager.LayoutManager layoutManager: Int,
+        @RecyclerViewLinearLayout.Orientation orientation: Int
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val VIEW_TYPE_ITEM = 1011
     private val VIEW_TYPE_LOADER = 1021

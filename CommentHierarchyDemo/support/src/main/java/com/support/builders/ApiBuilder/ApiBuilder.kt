@@ -2,9 +2,14 @@ package com.support.builders.ApiBuilder
 
 import com.example.parth.kotlinpractice_2.support.CoreActivity
 import com.google.gson.GsonBuilder
-import com.support.POJOModel
 import com.support.builders.ApiBuilder.WebServices.ApiNames
 import io.reactivex.Observable
+import io.reactivex.Single
+import io.reactivex.SingleObserver
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Retrofit
@@ -12,21 +17,39 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-fun <T : POJOModel> CoreActivity<*, *, *>.callApi(apiName: ApiNames, api: (Retrofit) -> Observable<T>, builder: ApiBuilder<T>.() -> Unit) = ApiBuilder(this, apiName, api).apply(builder)
+fun <T> CoreActivity<*, *, *>.callApi(
+        apiName: ApiNames,
+        singleCallback: SingleCallback,
+        api: () -> Observable<T>
+) = ApiBuilder(
+        this,
+        apiName,
+        singleCallback,
+        api
+)/*.apply(builder)*/
 fun setBaseURL(baseURL: String) {
     ApiBuilder.BASE_URL = baseURL
 }
 
-class ApiBuilder<T : POJOModel>(mActivity: CoreActivity<*, *, *>, apiName: ApiNames, api: (Retrofit) -> Observable<T>) {
+class ApiBuilder<T>(
+        mActivity: CoreActivity<*, *, *>,
+        apiName: ApiNames,
+        singleCallback: SingleCallback,
+        api: () -> Observable<T>
+) {
 
     companion object {
         val OKHTTP_TIMEOUT = 30.toLong()
         val TAG = "ApiClient"
         var BASE_URL = ""
+        var retrofit: Retrofit? = null
+        var webServices: WebServices? = null
+            get() {
+                return retrofit!!.create(WebServices::class.java)
+            }
     }
 
-    var retrofit: Retrofit? = null
-    lateinit var observableApi: Observable<T>
+    var observableApi: Observable<T>
 
     init {
         val gson = with(GsonBuilder()) {
@@ -38,7 +61,7 @@ class ApiBuilder<T : POJOModel>(mActivity: CoreActivity<*, *, *>, apiName: ApiNa
         try {
             if (BASE_URL.isNotBlank())
                 retrofit = with(Retrofit.Builder()) {
-                    baseUrl("")
+                    baseUrl(BASE_URL)
                     client(okHttpClient())
                     addConverterFactory(GsonConverterFactory.create(gson))
                     addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -50,7 +73,8 @@ class ApiBuilder<T : POJOModel>(mActivity: CoreActivity<*, *, *>, apiName: ApiNa
             print(e.localizedMessage)
         }
 
-        observableApi = api.invoke(retrofit!!)
+        observableApi = api.invoke()
+        subscribeToSingle(observableApi, mActivity.compositeDisposable!!, apiName, singleCallback)
     }
 
     fun okHttpClient(): OkHttpClient {
@@ -73,5 +97,40 @@ class ApiBuilder<T : POJOModel>(mActivity: CoreActivity<*, *, *>, apiName: ApiNa
         return client!!
     }
 
-    fun subscribeToSingle()
+    fun subscribeToSingle(
+            observable: Observable<T>,
+            compositeDisposable: CompositeDisposable,
+            apiName: ApiNames,
+            singleCallback: SingleCallback
+    ) {
+        makeSingle(observable).subscribe(getSingleObserver(compositeDisposable, apiName, singleCallback))
+    }
+
+    fun makeSingle(observable: Observable<T>): Single<T> {
+        return Single.fromObservable(observable)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+
+    }
+
+    fun getSingleObserver(
+            compositeDisposable: CompositeDisposable,
+            apiName: ApiNames,
+            singleCallback: SingleCallback
+    ): SingleObserver<T> {
+        return object : SingleObserver<T> {
+            override fun onSuccess(t: T) {
+                singleCallback.onSuccess(t as Any, apiName)
+            }
+
+            override fun onSubscribe(d: Disposable) {
+                if (compositeDisposable != null) compositeDisposable.add(d)
+            }
+
+            override fun onError(e: Throwable) {
+                singleCallback.onFailure(e, apiName)
+            }
+
+        }
+    }
 }

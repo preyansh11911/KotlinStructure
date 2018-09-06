@@ -9,7 +9,10 @@ interface WebServices {
     @GET("")
     fun <T : POJOModel> sampleWebService(): Observable<T>
 
+    @GET("demos/marvel/")
+    fun movieList(): Observable<ArrayList<MoviesItem>>
+
     enum class ApiNames {
-        sample
+        sample, movieList
     }
 }

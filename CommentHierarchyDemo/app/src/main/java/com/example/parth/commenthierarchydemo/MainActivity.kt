@@ -27,6 +27,7 @@ class MainActivity : CoreActivity<MainActivity, ActivityMainBinding, MainViewMod
 
     override fun workArea(vm: MainViewModel) {
         vm.createDRCList()
+//        vm.callApi()
         img_btn_send.setOnClickListener {
             vm.addItemToList(ed_comment.text.toString(), type, itemPosition)
             ed_comment.text.clear()
