@@ -2,6 +2,7 @@ package com.example.parth.commenthierarchydemo
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import com.example.parth.commenthierarchydemo.databinding.ActivityMessageBinding
 import com.example.parth.kotlinpractice_2.support.CoreActivity
 import com.support.builders.ApiBuilder.*
@@ -28,6 +29,15 @@ class MessageActivity : CoreActivity<MessageActivity, ActivityMessageBinding, Me
 //        vm.callMoviesApi()
         callApi(movieList, this)
         { ApiBuilder.webServices!!.movieList() }
+    }
+
+    override fun isBackEnabled() = false
+
+    override fun isCustomActionbar() = true
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.sample_menu, menu)
+        return true
     }
 
     override fun onSuccess(o: Any, apiName: WebServices.ApiNames) {
