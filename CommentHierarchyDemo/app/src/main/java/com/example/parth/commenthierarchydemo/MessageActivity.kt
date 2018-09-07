@@ -38,10 +38,4 @@ class MessageActivity : CoreActivity<MessageActivity, ActivityMessageBinding, Me
     override fun onFailure(throwable: Throwable, apiName: WebServices.ApiNames) {
         Log.e("MessageActivity", "Failure")
     }
-
-    override fun onTokenExpire(apiName: WebServices.ApiNames) {
-        Log.e("MessageActivity", "TokenExpired")
-    }
-
-
 }
