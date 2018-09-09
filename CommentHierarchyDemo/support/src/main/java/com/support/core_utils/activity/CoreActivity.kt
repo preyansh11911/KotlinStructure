@@ -6,6 +6,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -155,7 +156,7 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
         removeActionBar()
         setBindings(layoutRes)
         setCustomActionBarProperties(isCustomActionbar(), getActionBarTitle(), isBackEnabled())
-        activity.setSupportActionBar(tool_bar_box)
+        this.setSupportActionBar(tool_bar_box)
     }
 
     private fun setDefaultActionBarProperties(actionBarTitle: String, isBackEnabled: Boolean?) {
@@ -225,4 +226,9 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
      * Override this method to set NavigationDrawer in activity
      */
     open fun navigationDrawer() {}
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.core_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
 }

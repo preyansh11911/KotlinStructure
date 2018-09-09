@@ -33,13 +33,6 @@ class MessageActivity : CoreActivity<MessageActivity, ActivityMessageBinding, Me
 
     override fun isBackEnabled() = false
 
-    override fun isCustomActionbar() = true
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.sample_menu, menu)
-        return true
-    }
-
     override fun onSuccess(o: Any, apiName: WebServices.ApiNames) {
         vm!!.movieList = o as ArrayList<MoviesItem>
         vm!!.createMessageList(rec_msg)
@@ -47,5 +40,14 @@ class MessageActivity : CoreActivity<MessageActivity, ActivityMessageBinding, Me
 
     override fun onFailure(throwable: Throwable, apiName: WebServices.ApiNames) {
         Log.e("MessageActivity", "Failure")
+    }
+
+    override fun isCustomActionbar(): Boolean {
+        return true
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.sample_menu, menu)
+        return true
     }
 }
