@@ -30,11 +30,15 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
     lateinit var navigationDrawerBinding: ActivityDrawerBinding
     lateinit var binding: DB
     var vm: VM? = null
-    val viewModel: VM
         get() {
-            if (vm == null) vm = createViewModel(activity)
-            return vm!!
+            if (field == null) field = createViewModel(activity)
+            return field
         }
+    //    val viewModel: VM
+//        get() {
+//            if (vm == null) vm = createViewModel(activity)
+//            return vm!!
+//        }
     var coreVM: ActivityViewModel? = null
         get() {
             if (field == null) field = createCoreViewModel()
@@ -102,7 +106,7 @@ abstract class CoreActivity<T : CoreActivity<T, DB, VM>, DB : ViewDataBinding, V
             setActionBar()
         }
         bottomNavigation()
-        workArea(viewModel)
+        workArea(vm!!)
     }
 
     fun setActionBarTitle(title: String) {

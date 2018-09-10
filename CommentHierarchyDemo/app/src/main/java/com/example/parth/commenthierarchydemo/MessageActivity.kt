@@ -31,6 +31,12 @@ class MessageActivity : CoreActivity<MessageActivity, ActivityMessageBinding, Me
         { ApiBuilder.webServices!!.movieList() }
     }
 
+//    override fun navigationDrawer() {
+//        setUpNavigationDrawer(vm!!) {
+//            setNavigationDrawerMenu(R.menu.navigation_drawer_menu)
+//        }
+//    }
+
     override fun isBackEnabled() = false
 
     override fun onSuccess(o: Any, apiName: WebServices.ApiNames) {

@@ -1,12 +1,21 @@
 package com.support.builders
 
 import android.databinding.DataBindingUtil
+import android.databinding.ViewDataBinding
+import android.support.annotation.LayoutRes
 import android.support.design.widget.NavigationView
 import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import com.example.parth.kotlinpractice_2.support.ActivityViewModel
 import com.example.parth.kotlinpractice_2.support.CoreActivity
 import com.support.databinding.NavHeaderDrawerBinding
 import kotlinx.android.synthetic.main.activity_drawer.*
+
+fun <T : ActivityViewModel> CoreActivity<*, *, *>.setUpNavigationDrawer(
+        viewModel: T,
+        builder: NavigationDrawerBuilder<T>.() -> Unit
+) = NavigationDrawerBuilder<T>(this, viewModel).apply(builder)
 
 class NavigationDrawerBuilder<T : ActivityViewModel>(val coreActivity: CoreActivity<*, *, *>, val viewModel: T) {
 
@@ -30,5 +39,12 @@ class NavigationDrawerBuilder<T : ActivityViewModel>(val coreActivity: CoreActiv
 
     fun itemSelectedHandler(navigation: (T, NavigationView) -> Unit) {
         navigation(viewModel, navigationView)
+    }
+
+    fun <DB : ViewDataBinding> isCustomDrawer(@LayoutRes layoutResID: Int, view: (DB) -> Unit) {
+        val binding = DataBindingUtil.inflate<DB>(coreActivity.getLayoutInflater(), layoutResID, null, false)
+        val lp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        navigationView.addView(binding.root, lp)
+        view.invoke(binding)
     }
 }
