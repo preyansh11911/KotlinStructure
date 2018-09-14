@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import com.example.parth.commenthierarchydemo.databinding.SampleSingleItemBinding
 import com.example.parth.kotlinpractice_2.support.ActivityViewModel
 import com.support.builders.ApiBuilder.ApiBuilder
-import com.support.builders.ApiBuilder.MoviesItem
+import com.support.builders.ApiBuilder.model.MoviesItem
 import com.support.builders.RecyckerViewBuilder.RecyclerViewLayoutManager.LINEAR
 import com.support.builders.RecyckerViewBuilder.RecyclerViewLinearLayout.VERTICAL
 import com.support.builders.RecyckerViewBuilder.setUpWithBinding
@@ -46,6 +46,7 @@ class MessageViewModel(val mActivity: MessageActivity) : ActivityViewModel(mActi
 //    }
 
     fun setBaseURL() {
-        ApiBuilder.BASE_URL = "https://simplifiedcoding.net/"
+//        ApiBuilder.BASE_URL = "https://simplifiedcoding.net/"
+        ApiBuilder.BASE_URL = "http://stemwordcloud.esy.es/mlm/"
     }
 }

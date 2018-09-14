@@ -59,7 +59,7 @@ dependencies {
     //OkHttp Interceptor
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
-    implementation ('com.squareup.retrofit2:retrofit:2.4.0'){
+    implementation('com.squareup.retrofit2:retrofit:2.4.0') {
         // exclude Retrofit’s OkHttp peer-dependency module and define your own module import
         exclude module: 'okhttp'
     }

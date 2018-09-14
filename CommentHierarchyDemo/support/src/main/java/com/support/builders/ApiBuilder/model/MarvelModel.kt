@@ -1,4 +1,4 @@
-package com.support.builders.ApiBuilder
+package com.support.builders.ApiBuilder.model
 
 import com.google.gson.annotations.SerializedName
 import com.support.POJOModel

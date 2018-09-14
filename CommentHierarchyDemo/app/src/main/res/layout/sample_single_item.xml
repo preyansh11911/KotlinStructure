@@ -5,7 +5,7 @@
 
         <variable
             name="vm"
-            type="com.support.builders.ApiBuilder.MoviesItem" />
+            type="com.support.builders.ApiBuilder.model.MoviesItem" />
     </data>
 
     <android.support.v7.widget.CardView

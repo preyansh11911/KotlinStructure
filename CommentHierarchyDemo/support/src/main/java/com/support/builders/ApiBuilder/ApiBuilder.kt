@@ -20,11 +20,13 @@ import java.util.concurrent.TimeUnit
 fun <T> CoreActivity<*, *, *>.callApi(
         apiName: ApiNames,
         singleCallback: SingleCallback,
+        headers: MutableList<Header>? = null,
         api: () -> Observable<T>
 ) = ApiBuilder(
         this,
         apiName,
         singleCallback,
+        headers,
         api
 )/*.apply(builder)*/
 fun setBaseURL(baseURL: String) {
@@ -35,6 +37,7 @@ class ApiBuilder<T>(
         mActivity: CoreActivity<*, *, *>,
         apiName: ApiNames,
         singleCallback: SingleCallback,
+        val headers: MutableList<Header>? = null,
         api: () -> Observable<T>
 ) {
 
@@ -89,6 +92,10 @@ class ApiBuilder<T>(
 
             clientBuilder.addInterceptor { chain ->
                 val requestBuilder: Request.Builder = chain.request().newBuilder()
+                if (headers != null && headers.isNotEmpty()) {
+                    for (i in 0 until headers.size)
+                        requestBuilder.header(headers[i].key, headers[i].value)
+                }
                 chain.proceed(requestBuilder.build())
             }
 
