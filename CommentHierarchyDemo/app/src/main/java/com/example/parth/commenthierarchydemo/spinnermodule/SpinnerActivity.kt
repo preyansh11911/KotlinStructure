@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.example.parth.commenthierarchydemo.R
 import com.example.parth.commenthierarchydemo.databinding.ActivitySpinnerBinding
 import com.example.parth.kotlinpractice_2.support.CoreActivity
+import kotlinx.android.synthetic.main.activity_spinner.*
 
 class SpinnerActivity : CoreActivity<SpinnerActivity, ActivitySpinnerBinding, SpinnerViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +21,6 @@ class SpinnerActivity : CoreActivity<SpinnerActivity, ActivitySpinnerBinding, Sp
     override fun getActionBarTitle() = "Spinner Activity"
 
     override fun workArea(vm: SpinnerViewModel) {
-
+        vm.setSpinner(spinner_1)
     }
 }

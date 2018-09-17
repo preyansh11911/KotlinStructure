@@ -17,13 +17,15 @@
         <activity
             android:name=".MessageActivity"
             android:windowSoftInputMode="adjustPan">
+
+        </activity>
+        <activity android:name=".spinnermodule.SpinnerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".spinnermodule.SpinnerActivity"></activity>
     </application>
 
 </manifest>
