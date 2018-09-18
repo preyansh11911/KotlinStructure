@@ -1,6 +1,8 @@
 package com.support.builders.SpinnerBuilder
 
+import android.annotation.SuppressLint
 import android.support.annotation.ArrayRes
+import android.support.annotation.DrawableRes
 import android.support.annotation.LayoutRes
 import android.view.LayoutInflater
 import android.view.View
@@ -15,12 +17,12 @@ fun Spinner.Builder(
         itemList: MutableList<*>? = null,
         @LayoutRes itemLayout: Int? = null,
         @LayoutRes dropDownItemLayout: Int? = null,
-        builder: (SpinnerBuilder.() -> Unit)? = null
+        builder: SpinnerBuilder.() -> Unit
 ) = SpinnerBuilder(this,
         itemArrayResId,
         itemList,
         itemLayout,
-        dropDownItemLayout).apply { builder }
+        dropDownItemLayout).apply(builder)
 
 class SpinnerBuilder(
         val spinner: Spinner,
@@ -32,6 +34,7 @@ class SpinnerBuilder(
 
     var contentBindingListener: ((Any, View) -> Unit)? = null
 
+    @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = LayoutInflater.from(CoreActivity.instances).inflate(itemLayout!!, parent, false)
         contentBindingListener?.invoke(itemList?.get(position)!!, view)
@@ -65,25 +68,21 @@ class SpinnerBuilder(
                 dropDownItemLayout = android.R.layout.simple_spinner_dropdown_item
         }
 
+        if (itemArrayResId != null)
+            spinner.adapter = adapter
+        else if (itemList != null)
+            spinner.adapter = customAdapter
     }
 
     fun contentBinder(l: (Any, View) -> Unit) {
         contentBindingListener = l
     }
 
-    fun setItems(@ArrayRes itemArrayResId: Int, @LayoutRes itemLayout: Int) {
-        val adapter: ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(CoreActivity.instances, itemArrayResId, itemLayout)
-        this.adapter = adapter
-    }
+    /**
+     *
+     */
 
-    fun setDropDownViewLayout(@LayoutRes itemLayout: Int) {
-        adapter.setDropDownViewResource(itemLayout)
-    }
-
-    fun build() {
-        if (itemArrayResId != null)
-            spinner.adapter = adapter
-        else if (itemList != null)
-            spinner.adapter = customAdapter
+    fun setBackground(@DrawableRes layoutResId: Int) {
+        spinner.setBackgroundResource(layoutResId)
     }
 }

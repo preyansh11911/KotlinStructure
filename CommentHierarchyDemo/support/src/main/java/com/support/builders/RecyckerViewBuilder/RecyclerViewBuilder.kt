@@ -21,7 +21,13 @@ fun <T : POJOModel> RecyclerView.setUp(
 ) = RecyclerViewBuilder<T>(this, layoutResID, itemList, layoutManager, orientation).apply(builder)
 
 class RecyclerViewBuilder<T : POJOModel>
-(val recyclerView: RecyclerView, val layoutResID: Int, val mItems: ArrayList<T>, @LayoutManager layoutManager: Int, @Orientation orientation: Int) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+(
+        val recyclerView: RecyclerView,
+        val layoutResID: Int,
+        val mItems: ArrayList<T>,
+        @LayoutManager layoutManager: Int,
+        @Orientation orientation: Int
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val VIEW_TYPE_ITEM = 1012
     private val VIEW_TYPE_LOADER = 1022
